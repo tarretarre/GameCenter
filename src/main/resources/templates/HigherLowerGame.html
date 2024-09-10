@@ -24,8 +24,12 @@
 <div class="center"  id="gameBox" th:if = "${startGame} == true">
     <div class="randomNumber">
         <h3>?</h3>
-        <h5>Skriv din gissning nedan</h5>
+        <h4>Skriv din gissning nedan</h4>
         <textarea></textarea>
+        <br>
+        <p th:if = "${resultat} == true">fel!</p>
+        <p th:if = "${resultat} == false">rätt!</p>
+        <a th:href="@{/makeGuess}" class="guessButton">Guess!</a>
     </div>
 </div>
 </body>
