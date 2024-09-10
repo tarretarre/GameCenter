@@ -25,11 +25,13 @@
     <div class="randomNumber">
         <h3>?</h3>
         <h4>Skriv din gissning nedan</h4>
-        <textarea></textarea>
-        <br>
-        <p th:if = "${resultat} == true">fel!</p>
-        <p th:if = "${resultat} == false">rätt!</p>
-        <a th:href="@{/makeGuess}" class="guessButton">Guess!</a>
+        <form th:action="@{/makeGuess}" method="post">
+            <textarea name="guess" required></textarea>
+            <br>
+            <p th:if="${resultat} == true">fel!</p>
+            <p th:if="${resultat} == false">rätt!</p>
+            <button type="submit" class="guessButton">Guess!</button>
+        </form>
     </div>
 </div>
 </body>

@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -24,7 +27,6 @@ class HigherLowerGameControllerTest {
     private MockMvc mockMvc;
 
 
-
     @Test
     void testHigherLowerGameGetMapping() throws Exception {
         this.mockMvc.perform(get("/higherlowergame"))
@@ -33,6 +35,7 @@ class HigherLowerGameControllerTest {
                 .andExpect(model().attribute("startGame", false))
                 .andExpect(view().name("HigherLowerGame"));
     }
+
     @Test
     void testHigherLowerGameStartGame() throws Exception {
         this.mockMvc.perform(get("/startTheGame"))
@@ -40,5 +43,15 @@ class HigherLowerGameControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/higherlowergame"))
                 .andExpect(flash().attribute("startGame", true));
+    }
+
+    @Test
+    public void testMakeGuess() throws Exception {
+        mockMvc.perform(post("/makeGuess")
+                        .param("guess", "42"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/higherlowergame"))
+                .andExpect(flash().attribute("startGame", true))
+                .andExpect(flash().attribute("guess", "42"));
     }
 }

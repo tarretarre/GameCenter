@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequiredArgsConstructor
@@ -22,6 +24,14 @@ public class HigherLowerGameController {
     @GetMapping("startTheGame")
     public String startTheGameButton(RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("startGame", true);
+        return "redirect:/higherlowergame";
+    }
+
+    @PostMapping("makeGuess")
+    public String makeGuess(@RequestParam("guess") String guess, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("startGame", true);
+        redirectAttributes.addFlashAttribute("guess", guess);
+        System.out.println(guess);
         return "redirect:/higherlowergame";
     }
 }
