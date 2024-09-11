@@ -31,10 +31,16 @@ h2 {
     display: inline-block;
     font-size: 20px;
     border-radius: 5px;
+    font-family: "Courier New", sans-serif;
+    margin: 20px;
+    width: 300px;
+    height: 300px;
+    cursor: pointer;
+    box-shadow: 0 6px 12px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 
-.gameboard-minus{
+.gameBoard-minus{
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -64,7 +70,7 @@ h2 {
     gap: 10px;
 }
 
-.answer-minus{
+.answer-minus {
     border: 2px solid white;
     color: white;
     background-color: #04AA6D;
@@ -74,6 +80,7 @@ h2 {
     text-align: center;
     width: 50px;
     height: 50px;
+}
 
 .startGame{
     background-color: #04AA6D;
@@ -125,12 +132,13 @@ h2 {
     background-color: #99c3cc;
     text-align: center;
     border-radius: 10px;
-    max-width: 200px;
+    width: fit-content;
     max-height: 100px;
     align-items: center;
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
+    padding: 0 10px 0 10px;
 }
 
 #container {
