@@ -64,7 +64,7 @@ h2 {
     gap: 10px;
 }
 
-.answer-minus{
+.answer-minus {
     border: 2px solid white;
     color: white;
     background-color: #04AA6D;
@@ -74,6 +74,7 @@ h2 {
     text-align: center;
     width: 50px;
     height: 50px;
+}
 
 .startGame{
     background-color: #04AA6D;
