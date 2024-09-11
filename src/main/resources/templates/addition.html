@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/styles.css">
-    <title>Index</title>
+    <title>Addition game</title>
 </head>
 <body>
 <h1>Welcome to the GameCenter!</h1>
 <div class="center">
-<h2>Choose your game:</h2>
+    <h2>Choose your game:</h2>
     <a th:href="@{/}" class="button">Udda eller Jämnt</a>
+    <a th:href="@{/}" class="button">Högre eller Lägre</a>
     <a th:href="@{/addition}" class="button">Addition game</a>
-    <a th:href="@{/higherlowergame}" class="button">Higher and Lower</a>
     <a th:href="@{/}" class="button">Minustränaren</a>
 </div>
+
+<h2>Addition game</h2>
+
 </body>
 </html>
