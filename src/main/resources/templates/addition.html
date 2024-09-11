@@ -9,13 +9,49 @@
 <h1>Welcome to the GameCenter!</h1>
 <div class="center">
     <h2>Choose your game:</h2>
-    <a th:href="@{/}" class="button">Udda eller Jämnt</a>
-    <a th:href="@{/}" class="button">Högre eller Lägre</a>
+    <a th:href="@{/oddOrEven}" class="button">Odd or Even</a>
     <a th:href="@{/addition}" class="button">Addition game</a>
-    <a th:href="@{/}" class="button">Minustränaren</a>
+    <a th:href="@{/higherlowergame}" class="button">Higher and Lower</a>
+    <a th:href="@{/minus}" class="button">Subtraction game</a>
 </div>
+<div class="game-container">
 
-<h2>Addition game</h2>
+    <div th:if="${message} != ''" th:text="${message}" class="error-message"></div>
 
+    <th:block th:if="${gameDto.totalRounds} == 0">
+        <form action="/addition" th:object="${gameDto}" method="post">
+            <label for="rounds">How many rounds do you want to play?</label>
+            <input type="number" id="rounds" name="totalRounds" min="1" max="25"/>
+            <button type="submit" class="button">Start game</button>
+        </form>
+    </th:block>
+
+    <th:block th:if="${gameDto.totalRounds} != 0">
+        <div class="game-board">
+            <p class="question"
+               th:text="What is ${gameDto.getQuestionsAndCorrectAnswers().keySet()[gameDto.currentRound]}"></p>
+            <p class="description">Choose one of the following options</p>
+
+            <div class="answer-container">
+
+                <form action="/addition" th:object="${gameDto}" method="post">
+                    <input type="hidden" name="answer" th:field="*{answerChoices[currentRound][0]}"/>
+                    <button type="submit" class="answer" th:text=""></button>
+                </form>
+
+                <form action="/addition" th:object="${gameDto}" method="post">
+                    <input type="hidden" name="answer"  th:field="*{answerChoices[currentRound][1]}" />
+                    <button type="submit" class="answer"></button>
+                </form>
+
+                <form action="/addition" th:object="${gameDto}" method="post">
+                    <input type="hidden" name="answer"  th:field="*{answerChoices[currentRound][2]}" />
+                    <button type="submit" class="answer"></button>
+                </form>
+
+            </div>
+        </div>
+    </th:block>
+</div>
 </body>
 </html>
