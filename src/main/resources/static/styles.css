@@ -24,6 +24,49 @@ h1 {
     font-size: 16px;
     border-radius: 5px;
 }
+
+
+.gameboard-minus{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.question-minus{
+    display: block;
+    border: 2px solid white;
+    color: white;
+    background-color: #04AA6D;
+    font-size: 50px;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    width: fit-content;
+}
+
+.description{
+    font-size: 50px;
+    color: black;
+}
+
+.answer-container{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.answer-minus{
+    border: 2px solid white;
+    color: white;
+    background-color: #04AA6D;
+    font-size: 50px;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+
 .startGame{
     background-color: #04AA6D;
     border: none;
