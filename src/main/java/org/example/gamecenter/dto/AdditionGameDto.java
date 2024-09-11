@@ -16,6 +16,7 @@ public class AdditionGameDto {
     private int userAnswer;
     private Map<String, Integer> questionsAndCorrectAnswers;
     private List<List<Integer>> answerChoices;
+    private boolean started;
 
     public AdditionGameDto(int totalRounds) {
         this.totalRounds = totalRounds;
@@ -24,6 +25,7 @@ public class AdditionGameDto {
         this.userAnswer = -1;
         this.questionsAndCorrectAnswers = new HashMap<>();
         this.answerChoices = new ArrayList<>();
+        this.started = true;
     }
 
     public AdditionGameDto() {
@@ -33,5 +35,6 @@ public class AdditionGameDto {
         this.userAnswer = -1;
         this.questionsAndCorrectAnswers = new HashMap<>();
         this.answerChoices = new ArrayList<>();
+        this.started = false;
     }
 }
