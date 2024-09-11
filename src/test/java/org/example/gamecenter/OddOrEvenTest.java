@@ -9,8 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -21,9 +21,10 @@ public class OddOrEvenTest {
     private MockMvc mockMvc;
 
     @Test
-    public void testMinusReturnMinus() throws Exception {
+    public void testOddOrEvenReturnOddOrEven() throws Exception {
         mockMvc.perform(get("/oddOrEven"))
+                .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("oddOrEven"));
+                .andExpect(view().name("oddOrEven"));
     }
 }
