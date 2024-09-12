@@ -17,7 +17,7 @@
     <p>A number is hiding under the questionmark, type what you think the number is.</p>
     <p>You will then be told wether it's higher or lower</p>
     <br><br>
-    <a th:href="@{/startTheGame}" class="startGame">Start game</a>
+    <a th:href="@{/startTheGame}" class="start-game">Start game</a>
 </div>
 <div class="center"  id="gameBox" th:if = "${startGame} == true">
     <div class="randomNumber">
@@ -28,7 +28,7 @@
             <br>
             <p th:if="${resultat} == true">fel!</p>
             <p th:if="${resultat} == false">rätt!</p>
-            <button type="submit" class="guessButton">Guess!</button>
+            <button type="submit" class="guess-button">Guess!</button>
         </form>
     </div>
 </div>

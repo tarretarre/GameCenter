@@ -40,14 +40,14 @@ h2 {
 }
 
 
-.gameBoard-minus{
+.gameboard-minus {
     display: flex;
     align-items: center;
     flex-direction: column;
     gap: 20px;
 }
 
-.question-minus{
+.question-minus {
     display: block;
     border: 2px solid white;
     color: white;
@@ -59,12 +59,12 @@ h2 {
     width: fit-content;
 }
 
-.description{
+.description {
     font-size: 50px;
     color: black;
 }
 
-.answer-container{
+.answer-container {
     display: flex;
     justify-content: center;
     gap: 10px;
@@ -82,7 +82,7 @@ h2 {
     height: 50px;
 }
 
-.startGame{
+.start-game {
     background-color: #04AA6D;
     border: none;
     color: white;
@@ -93,7 +93,7 @@ h2 {
     font-size: 16px;
     border-radius: 5px;
 }
-.guessButton {
+.guess-button {
     background-color: #04AA6D;
     border: none;
     color: white;
