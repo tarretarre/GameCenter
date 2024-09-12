@@ -73,4 +73,16 @@ public class AdditionController {
         return "redirect:/addition";
     }
 
+    @PostMapping("/addition/game_over")
+    public String gameOver(RedirectAttributes rda) {
+        rda.addFlashAttribute("gameOver", true);
+        return "redirect:/addition";
+    }
+
+    @PostMapping("/addition/reset")
+    public String reset(HttpSession session) {
+        session.removeAttribute("gameDto");
+        return "redirect:/addition";
+    }
+
 }
