@@ -14,6 +14,7 @@
     <a th:href="@{/higherlowergame}" class="button">Higher and Lower</a>
     <a th:href="@{/minus}" class="button">Subtraction game</a>
 </div>
+
 <div class="game-container">
 
     <div th:if="${message} != ''" th:text="${message}" class="error-message"></div>
@@ -29,27 +30,30 @@
     <th:block th:if="${gameDto.totalRounds} != 0">
         <div class="game-board">
             <p class="question"
-               th:text="What is ${gameDto.getQuestionsAndCorrectAnswers().keySet()[gameDto.currentRound]}"></p>
+               th:text="'What is ' + ${gameDto.questions[gameDto.currentRound]}"></p>
             <p class="description">Choose one of the following options</p>
 
             <div class="answer-container">
 
-                <form action="/addition" th:object="${gameDto}" method="post">
-                    <input type="hidden" name="answer" th:field="*{answerChoices[currentRound][0]}"/>
-                    <button type="submit" class="answer" th:text=""></button>
-                </form>
+                <div th:each="answer : ${gameDto.answerChoices[gameDto.currentRound]}">
+                    <form action="/addition/answer_check" th:object="${gameDto}" method="post">
+                        <input type="hidden" name="userAnswer" class="hiddenInput" th:value="${answer}"/>
 
-                <form action="/addition" th:object="${gameDto}" method="post">
-                    <input type="hidden" name="answer"  th:field="*{answerChoices[currentRound][1]}" />
-                    <button type="submit" class="answer"></button>
-                </form>
+                        <button type="submit"
+                                class="answer"
+                                th:classappend="${answerCheck} ? (${gameDto.userAnswer == answer} ? 'grn-btn' : 'red-btn') : ''"
+                                th:text="${answer}">
+                        </button>
 
-                <form action="/addition" th:object="${gameDto}" method="post">
-                    <input type="hidden" name="answer"  th:field="*{answerChoices[currentRound][2]}" />
-                    <button type="submit" class="answer"></button>
-                </form>
-
+                    </form>
+                </div>
             </div>
+            <th:block th:if="${answerCheck}">
+                <form action="/addition" method="post">
+                    <button type="submit" class="button">Next question</button>
+                </form>
+            </th:block>
+
         </div>
     </th:block>
 </div>
