@@ -48,7 +48,7 @@ public class AdditionController {
 
         if (gameDto == null) {
             gameDto = formDto;
-        } else if (formDto != null) {
+        } else {
             gameDto.setUserAnswer(formDto.getUserAnswer());
             gameDto.setTotalRounds(formDto.getTotalRounds());
         }
