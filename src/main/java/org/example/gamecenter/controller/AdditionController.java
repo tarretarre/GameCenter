@@ -27,15 +27,15 @@ public class AdditionController {
 
         model.addAttribute("gameDto", gameDto);
 
-        if(!model.containsAttribute("message")) {
-            model.addAttribute("message", "");
-        }
-
         if (!model.containsAttribute("answerCheck")) {
             model.addAttribute("answerCheck", false);
         }
 
-        if (!model.containsAttribute("gameOver")) {
+        if (!model.containsAttribute("lastRound")) {
+            model.addAttribute("lastRound", false);
+        }
+
+        if(!model.containsAttribute("gameOver")) {
             model.addAttribute("gameOver", false);
         }
 
@@ -43,25 +43,11 @@ public class AdditionController {
     }
 
     @PostMapping("/addition")
-    public String additionPost(AdditionGameDto formDto, HttpSession session, RedirectAttributes rda) {
+    public String additionPost(Integer totalRounds, HttpSession session) {
         AdditionGameDto gameDto = (AdditionGameDto) session.getAttribute("gameDto");
 
-        if (gameDto == null) {
-            gameDto = formDto;
-        } else {
-            gameDto.setUserAnswer(formDto.getUserAnswer());
-            gameDto.setTotalRounds(formDto.getTotalRounds());
-        }
-
-        if(gameDto.getCurrentRound() == gameDto.getTotalRounds()) {
-            session.setAttribute("gameDto", gameDto);
-            rda.addFlashAttribute("gameOver", true);
-            return "redirect:/addition";
-        }
-
-        if(!gameDto.isStarted()) {
-            additionService.startGame(gameDto);
-            gameDto.print();
+        if (additionService.isFirstRound(gameDto)) {
+            additionService.startGame(gameDto, totalRounds);
             session.setAttribute("gameDto", gameDto);
             return "redirect:/addition";
         }
@@ -75,13 +61,14 @@ public class AdditionController {
     public String answerCheck(@ModelAttribute(name = "gameDto") AdditionGameDto formDto, RedirectAttributes rda, HttpSession session) {
         AdditionGameDto gameDto = (AdditionGameDto) session.getAttribute("gameDto");
 
-        if(gameDto != null) {
-            gameDto.setUserAnswer(formDto.getUserAnswer());
-            additionService.checkAnswer(gameDto);
-            session.setAttribute("gameDto", gameDto);
-            gameDto.print();
+        if(additionService.isLastRound(gameDto)) {
+            rda.addFlashAttribute("lastRound", true);
         }
 
+        gameDto.setUserAnswer(formDto.getUserAnswer());
+        additionService.checkAnswer(gameDto);
+
+        session.setAttribute("gameDto", gameDto);
         rda.addFlashAttribute("answerCheck", true);
         return "redirect:/addition";
     }
