@@ -11,11 +11,11 @@ import java.util.Random;
 @Service
 public class AdditionService {
 
-    public void startGame(AdditionGameDto gameDto) {
+    public void startGame(AdditionGameDto gameDto, Integer totalRounds) {
+        gameDto.setTotalRounds(totalRounds);
         generateQuestionsAndAnswers(gameDto);
         generateAnswerChoices(gameDto);
         gameDto.setStarted(true);
-        gameDto.setCurrentRound(1);
     }
 
     public void nextRound(AdditionGameDto gameDto) {
@@ -43,10 +43,12 @@ public class AdditionService {
 
     public void generateAnswerChoices(AdditionGameDto gameDto) {
         Random random = new Random();
+
         for (int i = 0; i < gameDto.getAnswers().size(); i++) {
             List<Integer> choices = new ArrayList<>();
             int correctAnswer = gameDto.getAnswers().get(i);
             choices.add(correctAnswer);
+
             for (int j = 0; j < 3; j++) {
                 int wrongAnswer = random.nextInt(200);
                 while (wrongAnswer == correctAnswer) {
@@ -57,5 +59,13 @@ public class AdditionService {
             gameDto.getAnswerChoices().add(choices);
         }
         gameDto.getAnswerChoices().forEach(Collections::shuffle);
+    }
+
+    public boolean isLastRound(AdditionGameDto gameDto) {
+        return gameDto.getCurrentRound() == gameDto.getTotalRounds() - 1;
+    }
+
+    public boolean isFirstRound(AdditionGameDto gameDto) {
+        return !gameDto.isStarted();
     }
 }
