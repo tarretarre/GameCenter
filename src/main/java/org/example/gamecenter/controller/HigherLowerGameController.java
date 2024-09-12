@@ -1,6 +1,7 @@
 package org.example.gamecenter.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.gamecenter.service.HigherLowerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 @Controller
 public class HigherLowerGameController {
+
+    private final HigherLowerService higherLowerService = new HigherLowerService();
+
+    int guessInt;
 
     @GetMapping("/higherlowergame")
     public String higherLowerGame(Model model) {
@@ -23,6 +28,7 @@ public class HigherLowerGameController {
     @GetMapping("startTheGame")
     public String startTheGameButton(RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("startGame", true);
+        guessInt = higherLowerService.randomNumberGenerator();
         return "redirect:/higherlowergame";
     }
 
@@ -30,7 +36,8 @@ public class HigherLowerGameController {
     public String makeGuess(@RequestParam("guess") String guess, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("startGame", true);
         redirectAttributes.addFlashAttribute("guess", guess);
-        System.out.println(guess);
+        int result = higherLowerService.controllGuess(guess,guessInt);
+        redirectAttributes.addFlashAttribute("result", result);
         return "redirect:/higherlowergame";
     }
 }
