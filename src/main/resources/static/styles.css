@@ -142,3 +142,57 @@ h2 {
     background-color: #C96868;
     margin: auto;
 }
+
+/*
+Addition Game Styles
+*/
+
+.window {
+    height: 60vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+}
+
+.question {
+    font-size: 50px;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    width: fit-content;
+}
+
+.choice-title {
+    font-size: 30px;
+    color: #2d5159;
+}
+
+.answer {
+    color: white;
+    background-color: #99c3cc;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 5px;
+    margin: 10px;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+}
+
+.btn-success {
+    border: 2px solid #41ff00;
+}
+
+.btn-fail {
+    border: 2px solid #ff0000;
+}
