@@ -7,22 +7,25 @@
 </head>
 <body>
 <h1>Minustränaren</h1>
-<div class="gameboard-minus">
-    <p class="question-minus">Vad blir 20-10 ?</p>
+<div class="gameboard-minus" th:if="${roundCounter} < ${endGame}">
+    <p class="question-minus" th:text="${question}"></p>
     <p class="description">Välj ett av följande alternativ</p>
 
     <div class="answer-container">
-    <p class="answer-minus">30</p>
-    <p class="answer-minus">5</p>
-    <p class="answer-minus">10</p>
+        <form method="POST" action="checkAnswer">
+    <button class="answer-minus" type="submit"  name="selectedAnswer" th:value="${answer[0]}" th:text="${answer[0]}"></button>
+    <button class="answer-minus" type="submit"  name="selectedAnswer" th:value="${answer[1]}" th:text="${answer[1]}"></button>
+    <button class="answer-minus" type="submit"  name="selectedAnswer" th:value="${answer[2]}" th:text="${answer[2]}"></button>
+            <p class="question-minus" th:text="${roundCounter} +'/'+${endGame}"></p>
+
+        </form>
     </div>
-    <p class="question-minus">Du är på 1/5</p>
 </div>
 
 <div class="login-container">
-    <th:block th:if="${counter} == 5  ">
+    <th:block th:if="${roundCounter} == 5  ">
         <div class="result-container">
-            <p class="result">Du fick 5 rätt av 5</p>
+            <p class="subtraction-result">Du fick 5 rätt av 5</p>
         </div>
     </th:block>
 </div>
