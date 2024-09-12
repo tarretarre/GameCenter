@@ -28,4 +28,24 @@ class AdditionControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("addition"));
     }
+
+    @Test
+    void testAddition() {
+    }
+
+    @Test
+    void additionPost() {
+    }
+
+    @Test
+    void answerCheck() {
+    }
+
+    @Test
+    void gameOver() {
+    }
+
+    @Test
+    void reset() {
+    }
 }
