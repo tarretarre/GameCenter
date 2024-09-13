@@ -6,7 +6,12 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-<h1>Minustränaren</h1>
+<div class="div-h1">
+    <a th:href="@{/}"><h1>GameCenter</h1></a>
+</div>
+<div class="div-h2">
+    <h2>Game: <br>Subtraction game</h2>
+</div>
 <div class="gameboard-minus">
     <p class="question-minus">Vad blir 20-10 ?</p>
     <p class="description">Välj ett av följande alternativ</p>
@@ -20,7 +25,7 @@
 </div>
 
 <div class="login-container">
-    <th:block th:if="${counter} == 5  ">
+    <th:block th:if="${counter} == 5">
         <div class="result-container">
             <p class="result">Du fick 5 rätt av 5</p>
         </div>
