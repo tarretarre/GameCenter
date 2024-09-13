@@ -1,22 +1,19 @@
-package org.example.gamecenter;
+package org.example.gamecenter.service;
 
-import org.example.gamecenter.service.OddOrEvenService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@SpringBootTest
 public class OddOrEvenServiceTest {
 
+    @Autowired
     private OddOrEvenService oddOrEvenService;
 
-    @BeforeEach
-    void setUp() {
-        oddOrEvenService = new OddOrEvenService();
-    }
-
     @Test
-    public void testGenerateRandomNumber() {
+    public void testGenerateRandomNumberWithinRange() {
         oddOrEvenService.generateRandomNumber();
         int randomNumber = oddOrEvenService.getRandomNumber();
 
