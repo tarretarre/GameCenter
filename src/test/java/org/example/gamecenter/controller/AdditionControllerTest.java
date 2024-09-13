@@ -1,8 +1,8 @@
 package org.example.gamecenter.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.gamecenter.dto.AdditionGameDto;
 import org.example.gamecenter.service.AdditionService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -12,10 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -27,59 +24,130 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AdditionControllerTest {
 
     @Autowired
-    private  MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
+    private MockMvc mockMvc;
 
     @MockBean
     private AdditionService additionService;
 
+    private MockHttpSession session;
+
+    @BeforeEach
+    void setUp() {
+        session = new MockHttpSession();
+    }
+
     @Test
     void additionTest_shouldContainModelAttributes() throws Exception {
-        AdditionGameDto gameDto = new AdditionGameDto();
-        MockHttpSession session = new MockHttpSession();
-        session.setAttribute("gameDto", gameDto);
-
+        assert session.getAttribute("gameDto") == null;
 
         mockMvc.perform(get("/addition").session(session))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("gameDto"))
-                .andExpect(model().attributeExists("gameOver"))
-                .andExpect(model().attributeExists("answerCheck"))
-                .andExpect(model().attributeExists("lastRound"))
                 .andExpect(model().attribute("gameOver", false))
                 .andExpect(model().attribute("answerCheck", false))
                 .andExpect(model().attribute("lastRound", false))
                 .andExpect(view().name("addition"));
+
+        assert session.getAttribute("gameDto") != null;
     }
 
     @Test
     void additionPost_startNewGame() throws Exception {
-        int totalRounds = 5;
-        MockHttpSession session = new MockHttpSession();
-        AdditionGameDto gameDto = new AdditionGameDto();
-        gameDto.setTotalRounds(totalRounds);
+        when(additionService.isFirstRound(any(AdditionGameDto.class))).thenReturn(true);
+        assert session.getAttribute("gameDto") == null;
 
-        when(additionService.isFirstRound(gameDto)).thenReturn(true);
-
-        mockMvc.perform(post("/addition").session(session).param("totalRounds", Integer.toString(totalRounds)))
+        mockMvc.perform(post("/addition")
+                        .session(session)
+                        .param("totalRounds", any(Integer.class).toString()))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/addition"))
+                .andExpect(redirectedUrl("/addition"));
 
+        assert session.getAttribute("gameDto") != null;
+        verify(additionService).isFirstRound(any(AdditionGameDto.class));
+        verify(additionService).startGame(any(AdditionGameDto.class), any(Integer.class));
+        verify(additionService, never()).nextRound(any(AdditionGameDto.class));
     }
 
     @Test
-    void answerCheck() {
+    void additionPost_proceedToNextRound() throws Exception {
+        when(additionService.isFirstRound(any(AdditionGameDto.class))).thenReturn(false);
+        assert session.getAttribute("gameDto") == null;
+
+        mockMvc.perform(post("/addition")
+                        .session(session)
+                        .param("totalRounds", any(Integer.class).toString()))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/addition"));
+
+        assert session.getAttribute("gameDto") != null;
+        verify(additionService).isFirstRound(any(AdditionGameDto.class));
+        verify(additionService).nextRound(any(AdditionGameDto.class));
+        verify(additionService, never()).startGame(any(AdditionGameDto.class), any(Integer.class));
     }
 
     @Test
-    void gameOver() {
+    void answerCheck_if_IsLastRound() throws Exception {
+        when(additionService.isLastRound(any(AdditionGameDto.class))).thenReturn(true);
+        assert session.getAttribute("gameDto") == null;
+
+        mockMvc.perform(post("/addition/answer-check")
+                        .session(session)
+                        .param("userAnswer", any(Integer.class).toString()))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(flash().attributeCount(2))
+                .andExpect(flash().attribute("lastRound", true))
+                .andExpect(flash().attribute("answerCheck", true))
+                .andExpect(redirectedUrl("/addition"));
+
+        assert session.getAttribute("gameDto") != null;
+        verify(additionService).isLastRound(any(AdditionGameDto.class));
+        verify(additionService).checkAnswer(any(AdditionGameDto.class));
     }
 
     @Test
-    void reset() {
+    void answerCheck_if_IsNotLastRound() throws Exception {
+        when(additionService.isLastRound(any(AdditionGameDto.class))).thenReturn(false);
+        assert session.getAttribute("gameDto") == null;
+
+        mockMvc.perform(post("/addition/answer-check")
+                        .session(session)
+                        .param("userAnswer", any(Integer.class).toString()))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(flash().attributeCount(1))
+                .andExpect(flash().attribute("answerCheck", true))
+                .andExpect(redirectedUrl("/addition"));
+
+        assert session.getAttribute("gameDto") != null;
+        verify(additionService).isLastRound(any(AdditionGameDto.class));
+        verify(additionService).checkAnswer(any(AdditionGameDto.class));
+    }
+
+    @Test
+    void gameOver_expectFlashAttributeGameOver() throws Exception {
+        mockMvc.perform(post("/addition/game-over"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(flash().attributeCount(1))
+                .andExpect(flash().attribute("gameOver", true))
+                .andExpect(redirectedUrl("/addition"));
+    }
+
+    @Test
+    void reset() throws Exception {
+        session.setAttribute("gameDto", new AdditionGameDto());
+        assert session.getAttribute("gameDto") != null;
+
+        mockMvc.perform(post("/addition/reset")
+                        .session(session))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/addition"));
+
+        assert session.getAttribute("gameDto") == null;
     }
 }
