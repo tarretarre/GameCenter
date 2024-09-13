@@ -12,6 +12,10 @@ import java.util.Random;
 public class AdditionService {
 
     public void startGame(AdditionGameDto gameDto, Integer totalRounds) {
+        if(totalRounds == null || totalRounds < 1) {
+            throw new IllegalArgumentException("Start Game -> Total Rounds cannot be null or less than 1");
+        }
+
         gameDto.setTotalRounds(totalRounds);
         generateQuestionsAndAnswers(gameDto);
         generateAnswerChoices(gameDto);
@@ -23,6 +27,14 @@ public class AdditionService {
     }
 
     public void checkAnswer(AdditionGameDto gameDto) {
+        if(gameDto.getAnswers().size() <= gameDto.getCurrentRound() || gameDto.getAnswers().isEmpty()) {
+            throw new IllegalArgumentException("Check Answer -> Answers cannot be empty or less than current round");
+        }
+
+        if (gameDto.getUserAnswer() == null) {
+            throw new IllegalArgumentException("Check Answer -> User Answer cannot be null");
+        }
+
         int currentRound = gameDto.getCurrentRound();
         int userAnswer = gameDto.getUserAnswer();
         int correctAnswer = gameDto.getAnswers().get(currentRound);
@@ -32,6 +44,10 @@ public class AdditionService {
     }
 
     public void generateQuestionsAndAnswers(AdditionGameDto gameDto) {
+        if(gameDto.getTotalRounds() == null || gameDto.getTotalRounds() < 1) {
+            throw new IllegalArgumentException("Generate Questions And Answers -> Total Rounds cannot be null or less than 1");
+        }
+
         Random random = new Random();
         for (int i = 0; i < gameDto.getTotalRounds(); i++) {
             int num1 = random.nextInt(100);
@@ -42,8 +58,11 @@ public class AdditionService {
     }
 
     public void generateAnswerChoices(AdditionGameDto gameDto) {
-        Random random = new Random();
+        if(gameDto.getAnswers() == null || gameDto.getAnswers().isEmpty()) {
+            throw new IllegalArgumentException("Generate Answer Choices -> Answers cannot be null or empty");
+        }
 
+        Random random = new Random();
         for (int i = 0; i < gameDto.getAnswers().size(); i++) {
             List<Integer> choices = new ArrayList<>();
             int correctAnswer = gameDto.getAnswers().get(i);
