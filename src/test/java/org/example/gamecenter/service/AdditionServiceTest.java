@@ -2,15 +2,15 @@ package org.example.gamecenter.service;
 
 import org.example.gamecenter.dto.AdditionGameDto;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class AdditionServiceTest {
+
     AdditionService additionService = new AdditionService();
+
     @Test
-    void emptyDtoStartGame_shouldGenerateQuestionAndAnswers_andSetGameToStarted() {
+    void emptyDto_StartGame_shouldGenerateQuestionAndAnswers_andSetGameToStarted() {
         AdditionGameDto emptyDto = new AdditionGameDto();
         Integer totalRounds = 5;
         additionService.startGame(emptyDto, totalRounds);
@@ -19,10 +19,19 @@ class AdditionServiceTest {
         assertEquals(5, emptyDto.getQuestions().size());
         assertEquals(5, emptyDto.getAnswers().size());
         assertEquals(5, emptyDto.getAnswerChoices().size());
+        assertTrue(emptyDto.isStarted());
+
         for(List<Integer> choices : emptyDto.getAnswerChoices()) {
             assertEquals(4, choices.size());
         }
-        assertTrue(emptyDto.isStarted());
+    }
+
+    @Test
+    void populatedDto_StartGame_shouldThrowException_ifTotalRoundsIsNullOrLessThanZero() {
+        AdditionGameDto emptyDto = new AdditionGameDto();
+        assertThrows(IllegalArgumentException.class, () -> additionService.startGame(emptyDto, -1));
+        assertThrows(IllegalArgumentException.class, () -> additionService.startGame(emptyDto, null));
+        assertThrows(IllegalArgumentException.class, () -> additionService.startGame(emptyDto, 0));
     }
 
     @Test
@@ -50,6 +59,24 @@ class AdditionServiceTest {
     }
 
     @Test
+    void checkAnswer_shouldThrowException_ifDataIsInvalid() {
+        AdditionGameDto answersListIsEmpty = new AdditionGameDto();
+        answersListIsEmpty.setUserAnswer(5);
+
+        AdditionGameDto answersListSizeIsLessThanCurrentRound = new AdditionGameDto();
+        answersListSizeIsLessThanCurrentRound.setAnswers(List.of(5));
+        answersListIsEmpty.setCurrentRound(2);
+
+        AdditionGameDto userAnswerNull = new AdditionGameDto();
+        userAnswerNull.setAnswers(List.of(5));
+        userAnswerNull.setCurrentRound(0);
+
+        assertThrows(IllegalArgumentException.class, () -> additionService.checkAnswer(answersListIsEmpty));
+        assertThrows(IllegalArgumentException.class, () -> additionService.checkAnswer(answersListSizeIsLessThanCurrentRound));
+        assertThrows(IllegalArgumentException.class, () -> additionService.checkAnswer(userAnswerNull));
+    }
+
+    @Test
     void checkAnswer_shouldNotIncrementCorrectAnswers_ifUserAnswerIsIncorrect() {
         AdditionGameDto incorrectAnswer = new AdditionGameDto();
         incorrectAnswer.setCurrentRound(0);
@@ -62,7 +89,7 @@ class AdditionServiceTest {
     }
 
     @Test
-    void generateQuestionsAndAnswers_shouldGenerateListWithQuestions_andListWithCorrectAnswers() {
+    void generateQuestionsAndAnswers_shouldGenerateListWithQuestions_andListWithCorrectAnswers_intoDto() {
         AdditionGameDto gameDto = new AdditionGameDto();
         gameDto.setTotalRounds(5);
         additionService.generateQuestionsAndAnswers(gameDto);
@@ -78,8 +105,22 @@ class AdditionServiceTest {
             int num2 = Integer.parseInt(parts[2]);
             assertEquals(answer, num1 + num2);
         }
-
     }
+
+    @Test
+    void generateQuestionsAndAnswers_shouldThrowException_ifTotalRoundsIsInvalid() {
+        AdditionGameDto gameDto = new AdditionGameDto();
+
+        gameDto.setTotalRounds(-1);
+        assertThrows(IllegalArgumentException.class, () -> additionService.generateQuestionsAndAnswers(gameDto));
+
+        gameDto.setTotalRounds(0);
+        assertThrows(IllegalArgumentException.class, () -> additionService.generateQuestionsAndAnswers(gameDto));
+
+        gameDto.setTotalRounds(null);
+        assertThrows(IllegalArgumentException.class, () -> additionService.generateQuestionsAndAnswers(gameDto));
+    }
+
 
     @Test
     void generateAnswerChoices_shouldGenerateListWithOneCorrectAnswer_andThreeWrongAnswers() {
@@ -104,6 +145,17 @@ class AdditionServiceTest {
                 assertNotEquals(correctAnswer, choices.get(j));
             }
         }
+    }
+
+    @Test
+    void generateAnswerChoices_shouldThrowException_ifAnswersListIsEmpty() {
+        AdditionGameDto gameDto = new AdditionGameDto();
+
+        gameDto.setAnswers(List.of());
+        assertThrows(IllegalArgumentException.class, () -> additionService.generateAnswerChoices(gameDto));
+
+        gameDto.setAnswers(null);
+        assertThrows(IllegalArgumentException.class, () -> additionService.generateAnswerChoices(gameDto));
     }
 
     @Test
