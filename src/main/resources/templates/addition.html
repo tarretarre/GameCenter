@@ -32,7 +32,7 @@
 
             <div class="answer-container">
                 <div th:each="answer : ${gameDto.answerChoices[gameDto.currentRound]}">
-                    <form action="/addition/answer_check" th:object="${gameDto}" method="post">
+                    <form action="/addition/answer-check" method="post">
                         <input type="hidden" name="userAnswer" class="hiddenInput" th:value="${answer}"/>
                         <button
                                 class="answer"
@@ -45,7 +45,7 @@
             </div>
             <br>
             <th:block th:if="${answerCheck}">
-                <form th:action="${lastRound}? '/addition/game_over': '/addition'" method="post">
+                <form th:action="${lastRound}? '/addition/game-over': '/addition'" method="post">
                     <button type="submit" class="button"
                             th:text="${lastRound} ? 'Finish game' : 'Next Question'"></button>
                 </form>

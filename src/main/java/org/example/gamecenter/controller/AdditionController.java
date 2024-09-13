@@ -7,8 +7,8 @@ import org.example.gamecenter.service.AdditionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -38,15 +38,15 @@ public class AdditionController {
         return "redirect:/addition";
     }
 
-    @PostMapping("/addition/answer_check")
-    public String answerCheck(@ModelAttribute(name = "gameDto") AdditionGameDto formDto, RedirectAttributes rda, HttpSession session) {
+    @PostMapping("/addition/answer-check")
+    public String answerCheck(@RequestParam Integer userAnswer, RedirectAttributes rda, HttpSession session) {
         AdditionGameDto gameDto = getOrCreateGameDto(session);
 
-        if(additionService.isLastRound(gameDto)) {
+        if (additionService.isLastRound(gameDto)) {
             rda.addFlashAttribute("lastRound", true);
         }
 
-        gameDto.setUserAnswer(formDto.getUserAnswer());
+        gameDto.setUserAnswer(userAnswer);
         additionService.checkAnswer(gameDto);
 
         session.setAttribute("gameDto", gameDto);
@@ -54,7 +54,7 @@ public class AdditionController {
         return "redirect:/addition";
     }
 
-    @PostMapping("/addition/game_over")
+    @PostMapping("/addition/game-over")
     public String gameOver(RedirectAttributes rda) {
         rda.addFlashAttribute("gameOver", true);
         return "redirect:/addition";
@@ -86,19 +86,27 @@ public class AdditionController {
             model.addAttribute("lastRound", false);
         }
 
-        if(!model.containsAttribute("gameOver")) {
+        if (!model.containsAttribute("gameOver")) {
             model.addAttribute("gameOver", false);
         }
     }
 
     private void startNewGame(AdditionGameDto gameDto, Integer totalRound, HttpSession session) {
-        additionService.startGame(gameDto, totalRound);
-        session.setAttribute("gameDto", gameDto);
+        try {
+            additionService.startGame(gameDto, totalRound);
+            session.setAttribute("gameDto", gameDto);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void proceedToNextRound(AdditionGameDto gameDto, HttpSession session) {
-        additionService.nextRound(gameDto);
-        session.setAttribute("gameDto", gameDto);
+        try {
+            additionService.nextRound(gameDto);
+            session.setAttribute("gameDto", gameDto);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }
