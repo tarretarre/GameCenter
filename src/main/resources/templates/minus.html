@@ -2,14 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Minustranaren</title>
+    <title>MinusGame</title>
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-<h1>Minustränaren</h1>
+<h1>MinusGame</h1>
 <div class="gameboard-minus" th:if="${roundCounter} < ${endGame}">
     <p class="question-minus" th:text="${question}"></p>
-    <p class="description">Välj ett av följande alternativ</p>
+    <p class="description">Choose one alternative</p>
+
+    <div th:if="${answer != null}">
+
 
     <div class="answer-container">
         <form method="POST" action="checkAnswer">
@@ -21,11 +24,12 @@
         </form>
     </div>
 </div>
+</div>
 
 <div class="login-container">
     <th:block th:if="${roundCounter} == 5  ">
         <div class="result-container">
-            <p class="subtraction-result">Du fick 5 rätt av 5</p>
+            <p class="subtraction-result">You got 5/5 correct answer</p>
         </div>
     </th:block>
 </div>

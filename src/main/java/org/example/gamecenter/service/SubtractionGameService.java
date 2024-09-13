@@ -7,7 +7,7 @@ import java.util.*;
 @Service
 public class SubtractionGameService {
     public HashMap<String,Integer> questionAndAnswer = new HashMap<>();
-    Map<String, Object> gameResult = new HashMap<>();
+    public Map<String, Object> gameResult = new HashMap<>();
 
     public SubtractionGameService() {
         questionAndAnswer.put("20-10",10);
@@ -18,6 +18,7 @@ public class SubtractionGameService {
         questionAndAnswer.put("20-20",0);
         questionAndAnswer.put("18-4",14);
         questionAndAnswer.put("25-10",15);
+
     }
 
     public Map<String, Object> gameLogic(){
