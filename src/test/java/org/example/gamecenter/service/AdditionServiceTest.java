@@ -10,7 +10,7 @@ class AdditionServiceTest {
     AdditionService additionService = new AdditionService();
 
     @Test
-    void emptyDto_StartGame_shouldGenerateQuestionAndAnswers_andSetGameToStarted() {
+    void emptyDtoStartGameShouldGenerateQuestionAndAnswersAndSetGameToStarted() {
         AdditionGameDto emptyDto = new AdditionGameDto();
         Integer totalRounds = 5;
         additionService.startGame(emptyDto, totalRounds);
@@ -27,7 +27,7 @@ class AdditionServiceTest {
     }
 
     @Test
-    void populatedDto_StartGame_shouldThrowException_ifTotalRoundsIsNullOrLessThanZero() {
+    void populatedDtoStartGameShouldThrowExceptionIfTotalRoundsIsNullOrLessThanZero() {
         AdditionGameDto emptyDto = new AdditionGameDto();
         assertThrows(IllegalArgumentException.class, () -> additionService.startGame(emptyDto, -1));
         assertThrows(IllegalArgumentException.class, () -> additionService.startGame(emptyDto, null));
@@ -35,7 +35,7 @@ class AdditionServiceTest {
     }
 
     @Test
-    void nextRound_shouldIncrementCurrentRound() {
+    void nextRoundShouldIncrementCurrentRound() {
         AdditionGameDto emptyDto = new AdditionGameDto();
         AdditionGameDto populatedDto = new AdditionGameDto();
         populatedDto.setCurrentRound(3);
@@ -47,7 +47,7 @@ class AdditionServiceTest {
     }
 
     @Test
-    void checkAnswer_shouldIncrementCorrectAnswers_ifUserAnswerIsCorrect() {
+    void checkAnswerShouldIncrementCorrectAnswersIfUserAnswerIsCorrect() {
         AdditionGameDto correctAnswer = new AdditionGameDto();
         correctAnswer.setCurrentRound(0);
         correctAnswer.setUserAnswer(5);
@@ -59,7 +59,7 @@ class AdditionServiceTest {
     }
 
     @Test
-    void checkAnswer_shouldThrowException_ifDataIsInvalid() {
+    void checkAnswerShouldThrowExceptionIfDataIsInvalid() {
         AdditionGameDto answersListIsEmpty = new AdditionGameDto();
         answersListIsEmpty.setUserAnswer(5);
 
@@ -77,7 +77,7 @@ class AdditionServiceTest {
     }
 
     @Test
-    void checkAnswer_shouldNotIncrementCorrectAnswers_ifUserAnswerIsIncorrect() {
+    void checkAnswerShouldNotIncrementCorrectAnswersIfUserAnswerIsIncorrect() {
         AdditionGameDto incorrectAnswer = new AdditionGameDto();
         incorrectAnswer.setCurrentRound(0);
         incorrectAnswer.setUserAnswer(5);
@@ -89,7 +89,7 @@ class AdditionServiceTest {
     }
 
     @Test
-    void generateQuestionsAndAnswers_shouldGenerateListWithQuestions_andListWithCorrectAnswers_intoDto() {
+    void generateQuestionsAndAnswersShouldGenerateListWithQuestionsAndListWithCorrectAnswersIntoDto() {
         AdditionGameDto gameDto = new AdditionGameDto();
         gameDto.setTotalRounds(5);
         additionService.generateQuestionsAndAnswers(gameDto);
@@ -108,7 +108,7 @@ class AdditionServiceTest {
     }
 
     @Test
-    void generateQuestionsAndAnswers_shouldThrowException_ifTotalRoundsIsInvalid() {
+    void generateQuestionsAndAnswersShouldThrowExceptionIfTotalRoundsIsInvalid() {
         AdditionGameDto gameDto = new AdditionGameDto();
 
         gameDto.setTotalRounds(-1);
@@ -123,7 +123,7 @@ class AdditionServiceTest {
 
 
     @Test
-    void generateAnswerChoices_shouldGenerateListWithOneCorrectAnswer_andThreeWrongAnswers() {
+    void generateAnswerChoicesShouldGenerateListWithOneCorrectAnswerAndThreeWrongAnswers() {
         AdditionGameDto gameDto = new AdditionGameDto();
         gameDto.setTotalRounds(5);
         additionService.generateQuestionsAndAnswers(gameDto);
@@ -148,7 +148,7 @@ class AdditionServiceTest {
     }
 
     @Test
-    void generateAnswerChoices_shouldThrowException_ifAnswersListIsEmpty() {
+    void generateAnswerChoicesShouldThrowExceptionIfAnswersListIsEmpty() {
         AdditionGameDto gameDto = new AdditionGameDto();
 
         gameDto.setAnswers(List.of());
@@ -159,7 +159,7 @@ class AdditionServiceTest {
     }
 
     @Test
-    void isLastRound_shouldReturnTrue_ifGameWillBeRunningLastRound() {
+    void isLastRoundShouldReturnTrueIfGameWillBeRunningLastRound() {
         AdditionGameDto correct = new AdditionGameDto();
         correct.setTotalRounds(5);
         correct.setCurrentRound(4);
@@ -172,7 +172,7 @@ class AdditionServiceTest {
     }
 
     @Test
-    void isFirstRound_shouldReturnTrue_ifGameHasNotStarted() {
+    void isFirstRoundShouldReturnTrueIfGameHasNotStarted() {
         AdditionGameDto correct = new AdditionGameDto();
         correct.setStarted(false);
 

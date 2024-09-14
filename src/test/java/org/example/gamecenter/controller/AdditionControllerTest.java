@@ -37,7 +37,7 @@ class AdditionControllerTest {
     }
 
     @Test
-    void additionTest_shouldContainModelAttributes() throws Exception {
+    void additionTestShouldContainModelAttributes() throws Exception {
         assert session.getAttribute("gameDto") == null;
 
         mockMvc.perform(get("/addition").session(session))
@@ -53,7 +53,7 @@ class AdditionControllerTest {
     }
 
     @Test
-    void additionPost_startNewGame() throws Exception {
+    void additionPostStartNewGame() throws Exception {
         when(additionService.isFirstRound(any(AdditionGameDto.class))).thenReturn(true);
         assert session.getAttribute("gameDto") == null;
 
@@ -71,7 +71,7 @@ class AdditionControllerTest {
     }
 
     @Test
-    void additionPost_proceedToNextRound() throws Exception {
+    void additionPostProceedToNextRound() throws Exception {
         when(additionService.isFirstRound(any(AdditionGameDto.class))).thenReturn(false);
         assert session.getAttribute("gameDto") == null;
 
@@ -89,7 +89,7 @@ class AdditionControllerTest {
     }
 
     @Test
-    void answerCheck_if_IsLastRound() throws Exception {
+    void answerCheckIfIsLastRound() throws Exception {
         when(additionService.isLastRound(any(AdditionGameDto.class))).thenReturn(true);
         assert session.getAttribute("gameDto") == null;
 
@@ -109,7 +109,7 @@ class AdditionControllerTest {
     }
 
     @Test
-    void answerCheck_if_IsNotLastRound() throws Exception {
+    void answerCheckIfIsNotLastRound() throws Exception {
         when(additionService.isLastRound(any(AdditionGameDto.class))).thenReturn(false);
         assert session.getAttribute("gameDto") == null;
 
@@ -128,7 +128,7 @@ class AdditionControllerTest {
     }
 
     @Test
-    void gameOver_expectFlashAttributeGameOver() throws Exception {
+    void gameOverExpectFlashAttributeGameOver() throws Exception {
         mockMvc.perform(post("/addition/game-over"))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
@@ -138,7 +138,7 @@ class AdditionControllerTest {
     }
 
     @Test
-    void reset() throws Exception {
+    void resetShouldRemoveSessionAttributeAndRedirect() throws Exception {
         session.setAttribute("gameDto", new AdditionGameDto());
         assert session.getAttribute("gameDto") != null;
 
