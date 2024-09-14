@@ -40,5 +40,39 @@ public class OddOrEvenServiceTest {
         assertTrue(oddOrEvenService.checkChoice("odd"));
     }
 
+    @Test
+    public void testUpdateScoreIncreaseOnCorrectChoice() {
+        oddOrEvenService.updateScore(true);
+        assertEquals(1, oddOrEvenService.getCorrectChoices());
+    }
 
+    @Test
+    public void testRoundResultCorrect() {
+        String result = oddOrEvenService.getRoundResult(true);
+        assertEquals("Correct", result);
+    }
+
+    @Test
+    public void testRoundResultWrong() {
+        String result = oddOrEvenService.getRoundResult(false);
+        assertEquals("Wrong", result);
+    }
+
+    @Test
+    public void testFinalResultMatchingTotalCorrectChoices() {
+        oddOrEvenService.setCorrectChoices(3);
+        String result = oddOrEvenService.getFinalResult();
+        assertEquals("You got 3 right out of 5!", result);
+    }
+
+    @Test
+    public void testIsGameOverAfterFiveRounds() {
+        oddOrEvenService.startNewGame();
+
+        for (int i = 0; i < 5; i++) {
+            oddOrEvenService.playRound("even");
+        }
+
+        assertTrue(oddOrEvenService.isGameOver());
+    }
 }

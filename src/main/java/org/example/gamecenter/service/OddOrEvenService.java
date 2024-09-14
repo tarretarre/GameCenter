@@ -30,13 +30,43 @@ public class OddOrEvenService {
         roundCount = 0;
     }
 
+    public boolean checkChoice(String choice) {
+        boolean isEven = (randomNumber % 2 == 0);
+        return (isEven && choice.equalsIgnoreCase("Even")) || (!isEven && choice.equalsIgnoreCase("Odd"));
+    }
+
+    public void updateScore(boolean correctChoice) {
+        if (correctChoice) {
+            correctChoices++;
+        }
+    }
+
+    public String getRoundResult(boolean correctChoice) {
+        return correctChoice ? "Correct" : "Wrong";
+    }
+
+    public String getFinalResult() {
+        return "You got " + correctChoices + " right out of 5!";
+    }
 
     public boolean isGameOver() {
         return roundCount >= 5;
     }
 
-    public boolean checkChoice(String choice) {
-        boolean isEven = (randomNumber % 2 == 0);
-        return (isEven && choice.equalsIgnoreCase("Even")) || (!isEven && choice.equalsIgnoreCase("Odd"));
+    public String playRound(String choice) {
+        roundCount++;
+
+        boolean isCorrectChoice = checkChoice(choice);
+        updateScore(isCorrectChoice);
+
+        String result;
+        if (isGameOver()) {
+            result = getFinalResult();
+        } else {
+            result = getRoundResult(isCorrectChoice);
+            generateRandomNumber();
+        }
+
+        return result;
     }
 }
