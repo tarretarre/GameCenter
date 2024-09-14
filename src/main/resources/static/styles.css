@@ -41,6 +41,12 @@ h2 {
     gap: 20px;
 }
 
+.result-container-minus{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .question-minus{
     display: block;
     border: 2px solid white;
