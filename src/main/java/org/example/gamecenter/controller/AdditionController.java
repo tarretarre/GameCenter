@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.example.gamecenter.dto.AdditionGameDto;
 import org.example.gamecenter.service.AdditionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 @RequestMapping("/addition")
 public class AdditionController {
+    private static final Logger logger = LoggerFactory.getLogger(AdditionController.class);
     private final AdditionService additionService;
 
     @GetMapping()
@@ -98,7 +101,7 @@ public class AdditionController {
             additionService.startGame(gameDto, totalRound);
             session.setAttribute("gameDto", gameDto);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            logger.error("Failed to start new game: {}", e.getMessage());
         }
     }
 
@@ -107,7 +110,7 @@ public class AdditionController {
             additionService.nextRound(gameDto);
             session.setAttribute("gameDto", gameDto);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            logger.error("Failed to proceed to next round: {}", e.getMessage());
         }
     }
 
