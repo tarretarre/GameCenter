@@ -8,15 +8,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/addition")
 public class AdditionController {
     private final AdditionService additionService;
 
-    @GetMapping("/addition")
+    @GetMapping()
     public String addition(Model model, HttpSession session) {
         AdditionGameDto gameDto = getOrCreateGameDto(session);
         model.addAttribute("gameDto", gameDto);
@@ -25,7 +27,7 @@ public class AdditionController {
         return "addition";
     }
 
-    @PostMapping("/addition")
+    @PostMapping()
     public String additionPost(Integer totalRounds, HttpSession session) {
         AdditionGameDto gameDto = getOrCreateGameDto(session);
 
@@ -38,7 +40,7 @@ public class AdditionController {
         return "redirect:/addition";
     }
 
-    @PostMapping("/addition/answer-check")
+    @PostMapping("/answer-check")
     public String answerCheck(@RequestParam Integer userAnswer, RedirectAttributes rda, HttpSession session) {
         AdditionGameDto gameDto = getOrCreateGameDto(session);
 
@@ -54,13 +56,13 @@ public class AdditionController {
         return "redirect:/addition";
     }
 
-    @PostMapping("/addition/game-over")
+    @PostMapping("/game-over")
     public String gameOver(RedirectAttributes rda) {
         rda.addFlashAttribute("gameOver", true);
         return "redirect:/addition";
     }
 
-    @PostMapping("/addition/reset")
+    @PostMapping("/reset")
     public String reset(HttpSession session) {
         session.removeAttribute("gameDto");
         return "redirect:/addition";
