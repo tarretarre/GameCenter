@@ -1,6 +1,7 @@
 package org.example.gamecenter.service;
 
 import lombok.Data;
+import org.example.gamecenter.DTO.OddOrEvenDTO;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
@@ -12,32 +13,25 @@ import java.util.Random;
 public class OddOrEvenService {
 
     private Random random = new Random();
-    private int randomNumber;
-    private int correctChoices = 0;
-    private int roundCount = 0;
 
-    public void generateRandomNumber() {
-        randomNumber = random.nextInt(100) + 1;
+    public void generateRandomNumber(OddOrEvenDTO ooeDTO) {
+        ooeDTO.setRandomNumber(random.nextInt(100) + 1);
     }
 
-    public void startNewGame() {
-        resetGame();
-        generateRandomNumber();
+    public void startNewGame(OddOrEvenDTO ooeDTO) {
+        ooeDTO.resetGame();
+        generateRandomNumber(ooeDTO);
     }
 
-    private void resetGame() {
-        correctChoices = 0;
-        roundCount = 0;
+    public boolean checkChoice(OddOrEvenDTO ooeDTO, String choice) {
+        boolean isEven = (ooeDTO.getRandomNumber() % 2 == 0);
+        return (isEven && choice.equalsIgnoreCase("Even"))
+                || (!isEven && choice.equalsIgnoreCase("Odd"));
     }
 
-    public boolean checkChoice(String choice) {
-        boolean isEven = (randomNumber % 2 == 0);
-        return (isEven && choice.equalsIgnoreCase("Even")) || (!isEven && choice.equalsIgnoreCase("Odd"));
-    }
-
-    public void updateScore(boolean correctChoice) {
+    public void updateScore(OddOrEvenDTO ooeDTO,boolean correctChoice) {
         if (correctChoice) {
-            correctChoices++;
+            ooeDTO.setCorrectChoices(ooeDTO.getCorrectChoices() + 1);
         }
     }
 
@@ -45,26 +39,26 @@ public class OddOrEvenService {
         return correctChoice ? "Correct" : "Wrong";
     }
 
-    public String getFinalResult() {
-        return "You got " + correctChoices + " right out of 5!";
+    public String getFinalResult(OddOrEvenDTO ooeDTO) {
+        return "You got " + ooeDTO.getCorrectChoices() + " right out of 5!";
     }
 
-    public boolean isGameOver() {
-        return roundCount >= 5;
+    public boolean isGameOver(OddOrEvenDTO ooeDTO) {
+        return ooeDTO.getRoundCount() >= 5;
     }
 
-    public String playRound(String choice) {
-        roundCount++;
+    public String playRound(OddOrEvenDTO ooeDTO,String choice) {
+        ooeDTO.setRoundCount(ooeDTO.getRoundCount() + 1);
 
-        boolean isCorrectChoice = checkChoice(choice);
-        updateScore(isCorrectChoice);
+        boolean isCorrectChoice = checkChoice(ooeDTO, choice);
+        updateScore(ooeDTO, isCorrectChoice);
 
         String result;
-        if (isGameOver()) {
-            result = getFinalResult();
+        if (isGameOver(ooeDTO)) {
+            result = getFinalResult(ooeDTO);
         } else {
             result = getRoundResult(isCorrectChoice);
-            generateRandomNumber();
+            generateRandomNumber(ooeDTO);
         }
 
         return result;

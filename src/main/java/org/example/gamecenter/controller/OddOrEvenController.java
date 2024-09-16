@@ -1,7 +1,8 @@
 package org.example.gamecenter.controller;
 
+import jakarta.servlet.http.HttpSession;
+import org.example.gamecenter.DTO.OddOrEvenDTO;
 import org.example.gamecenter.service.OddOrEvenService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +15,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/oddOrEven")
 public class OddOrEvenController {
 
-    @Autowired
-    private OddOrEvenService ooe;
+    private final OddOrEvenService ooe;
+
+    public OddOrEvenController(OddOrEvenService ooe) {
+        this.ooe = ooe;
+    }
 
     @GetMapping("")
     public String oddOrEvenGame() {
@@ -23,23 +27,31 @@ public class OddOrEvenController {
     }
 
     @GetMapping("/Start")
-    public String startGame(Model model) {
-        ooe.startNewGame();
-        model.addAttribute("randomNumber", ooe.getRandomNumber());
+    public String startGame(Model model, HttpSession session) {
+        OddOrEvenDTO ooeDTO = new OddOrEvenDTO();
+        ooe.startNewGame(ooeDTO);
+        session.setAttribute("ooeDTO", ooeDTO);
+        model.addAttribute("randomNumber", ooeDTO.getRandomNumber());
         return "oddOrEvenGamePlay";
     }
 
     @PostMapping("/Gameplay")
-    public String gamePlay(@RequestParam("choice") String choice, RedirectAttributes redirectAttributes) {
-        String result = ooe.playRound(choice);
+    public String gamePlay(@RequestParam("choice") String choice, RedirectAttributes redirectAttributes, HttpSession session) {
+        OddOrEvenDTO ooeDTO = (OddOrEvenDTO) session.getAttribute("ooeDTO");
+
+        if (ooeDTO == null) {
+            return "redirect:/oddOrEven/Start";
+        }
+
+        String result = ooe.playRound(ooeDTO, choice);
         redirectAttributes.addFlashAttribute("result", result);
 
-        if (ooe.isGameOver()) {
-            redirectAttributes.addFlashAttribute("correctChoices", ooe.getCorrectChoices());
+        if (ooe.isGameOver(ooeDTO)) {
+            redirectAttributes.addFlashAttribute("correctChoices", ooeDTO.getCorrectChoices());
             return "redirect:/oddOrEven/GameOver";
         }
 
-        redirectAttributes.addFlashAttribute("randomNumber", ooe.getRandomNumber());
+        redirectAttributes.addFlashAttribute("randomNumber", ooeDTO.getRandomNumber());
         return "redirect:/oddOrEven/Gameplay";
     }
 
@@ -49,8 +61,11 @@ public class OddOrEvenController {
     }
 
     @GetMapping("/GameOver")
-    public String gameOver(Model model) {
-        model.addAttribute("correctChoices", ooe.getCorrectChoices());
+    public String gameOver(Model model, HttpSession session) {
+        OddOrEvenDTO ooeDTO = (OddOrEvenDTO) session.getAttribute("ooeDTO");
+        if (ooeDTO != null) {
+            model.addAttribute("correctChoices", ooeDTO.getCorrectChoices());
+        }
         return "oddOrEvenGameOver";
     }
 }

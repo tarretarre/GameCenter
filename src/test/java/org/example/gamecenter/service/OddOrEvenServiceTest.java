@@ -1,5 +1,7 @@
 package org.example.gamecenter.service;
 
+import org.example.gamecenter.DTO.OddOrEvenDTO;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,37 +15,44 @@ public class OddOrEvenServiceTest {
     @Autowired
     private OddOrEvenService oddOrEvenService;
 
+    private OddOrEvenDTO ooeDTO;
+
+    @BeforeEach
+    public void setup() {
+        ooeDTO = new OddOrEvenDTO();
+    }
+
     @Test
     public void testGenerateRandomNumberWithinRange() {
-        oddOrEvenService.generateRandomNumber();
-        int randomNumber = oddOrEvenService.getRandomNumber();
+        oddOrEvenService.generateRandomNumber(ooeDTO);
+        int randomNumber = ooeDTO.getRandomNumber();
         assertTrue(randomNumber >= 1 && randomNumber <= 100);
     }
 
     @Test
     public void testStartNewGameShouldResetGameAndGenerateRandomNumber() {
-        oddOrEvenService.startNewGame();
-        assertEquals(0, oddOrEvenService.getCorrectChoices());
-        assertEquals(0, oddOrEvenService.getRoundCount());
-        assertTrue(oddOrEvenService.getRandomNumber() > 0);
+        oddOrEvenService.startNewGame(ooeDTO);
+        assertEquals(0, ooeDTO.getCorrectChoices());
+        assertEquals(0, ooeDTO.getRoundCount());
+        assertTrue(ooeDTO.getRandomNumber() > 0);
     }
 
     @Test
     public void testCheckEvenChoice() {
-        oddOrEvenService.setRandomNumber(12);
-        assertTrue(oddOrEvenService.checkChoice("even"));
+        ooeDTO.setRandomNumber(12);
+        assertTrue(oddOrEvenService.checkChoice(ooeDTO, "even"));
     }
 
     @Test
     public void testCheckOddChoice() {
-        oddOrEvenService.setRandomNumber(11);
-        assertTrue(oddOrEvenService.checkChoice("odd"));
+        ooeDTO.setRandomNumber(11);
+        assertTrue(oddOrEvenService.checkChoice(ooeDTO, "odd"));
     }
 
     @Test
     public void testUpdateScoreIncreaseOnCorrectChoice() {
-        oddOrEvenService.updateScore(true);
-        assertEquals(1, oddOrEvenService.getCorrectChoices());
+        oddOrEvenService.updateScore(ooeDTO,true);
+        assertEquals(1, ooeDTO.getCorrectChoices());
     }
 
     @Test
@@ -60,19 +69,19 @@ public class OddOrEvenServiceTest {
 
     @Test
     public void testFinalResultMatchingTotalCorrectChoices() {
-        oddOrEvenService.setCorrectChoices(3);
-        String result = oddOrEvenService.getFinalResult();
+        ooeDTO.setCorrectChoices(3);
+        String result = oddOrEvenService.getFinalResult(ooeDTO);
         assertEquals("You got 3 right out of 5!", result);
     }
 
     @Test
     public void testIsGameOverAfterFiveRounds() {
-        oddOrEvenService.startNewGame();
+        oddOrEvenService.startNewGame(ooeDTO);
 
         for (int i = 0; i < 5; i++) {
-            oddOrEvenService.playRound("even");
+            oddOrEvenService.playRound(ooeDTO, "even");
         }
 
-        assertTrue(oddOrEvenService.isGameOver());
+        assertTrue(oddOrEvenService.isGameOver(ooeDTO));
     }
 }
