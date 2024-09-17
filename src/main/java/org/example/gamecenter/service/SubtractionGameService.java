@@ -23,9 +23,10 @@ public class SubtractionGameService {
         int endGame = 5;
         int roundCounter = (int) gameResult.getOrDefault("roundCounter",1);
 
-        if(roundCounter > endGame){
+        if(roundCounter >= endGame){
             return gameResult;
         }
+
             Random random = new Random();
             Object[] questions = questionAndAnswer.keySet().toArray();
             String question = (String)questions[random.nextInt(questions.length)];
@@ -50,7 +51,7 @@ public class SubtractionGameService {
             gameResult.put("answer",answer);
             gameResult.put("roundCounter",roundCounter);
             gameResult.put("endGame",endGame);
-            System.out.println("Round = " +roundCounter);
+
 
 
 
