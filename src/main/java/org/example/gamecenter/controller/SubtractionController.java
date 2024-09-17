@@ -35,11 +35,7 @@ public class SubtractionController {
             return "minus";
         }
 
-      /* @GetMapping("/resetGame")
-        public String resetGame(HttpSession session){
-           session.invalidate();
-            return "redirect:/minus";
-        }*/
+
 
 
 
@@ -78,26 +74,10 @@ public class SubtractionController {
             int endGame = (int)checkAnswerMap.get("endGame");
 
 
-
-
-
-
-
-
-
-
-            System.out.println("Session attributes: roundCounter = " + roundCounter + " CorrectanswerCounter = "+ correctAnswerCounter);
-
-
-
-            if (roundCounter > endGame){
-                session.setAttribute("correctAnswerCounter",0);
-                session.setAttribute("roundCounter",0);
-                return "redirect:/minus";
+            if (roundCounter >= endGame){
+                System.out.println("Nollställer correctanswarCounter");
+                session.removeAttribute("correctAnswerCounter");
             }
-
-            session.setAttribute("roundCounter",roundCounter);
-            session.setAttribute("correctAnswerCounter", correctAnswerCounter);
 
 
             Map<String, Object> questionAndAnswerData = service.gameLogic();
