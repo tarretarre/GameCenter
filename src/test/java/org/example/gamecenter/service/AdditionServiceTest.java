@@ -16,9 +16,9 @@ class AdditionServiceTest {
         additionService.startGame(emptyDto, totalRounds);
 
         assertEquals(totalRounds, emptyDto.getTotalRounds());
-        assertEquals(4, emptyDto.getQuestions().size());
-        assertEquals(5, emptyDto.getAnswers().size());
-        assertEquals(5, emptyDto.getAnswerChoices().size());
+        assertEquals(totalRounds, emptyDto.getQuestions().size());
+        assertEquals(totalRounds, emptyDto.getAnswers().size());
+        assertEquals(totalRounds, emptyDto.getAnswerChoices().size());
         assertTrue(emptyDto.isStarted());
 
         for(List<Integer> choices : emptyDto.getAnswerChoices()) {
