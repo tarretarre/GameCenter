@@ -8,7 +8,7 @@ public class OddOrEven {
 
     @GetMapping("/oddOrEven")
     public String oddOrEvenGame() {
-        System.out.println("Game Odd or Even  opened");
+        System.out.println("Game Odd or Even opened");
         return "oddOrEven";
     }
 }
