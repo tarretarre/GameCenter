@@ -198,3 +198,9 @@ h3 {
 .choice-button:hover {
     box-shadow: 0 0 0 0;
 }
+.random-number{
+    text-align: center;
+}
+.game-area{
+    text-align: center;
+}

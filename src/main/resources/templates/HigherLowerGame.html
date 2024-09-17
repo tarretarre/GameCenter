@@ -14,20 +14,22 @@
 </div>
 <div class="center" th:if = "${startGame} == false">
     <h3>Higher and Lower!</h3>
-    <p>A number is hiding under the questionmark, type what you think the number is.</p>
-    <p>You will then be told wether it's higher or lower</p>
+    <p>A number is hiding under the question mark, type what you think the number is.</p>
+    <p>You will then be told whether it's higher or lower</p>
     <br><br>
     <a th:href="@{/startTheGame}" class="start-game">Start game</a>
 </div>
-<div class="center"  id="gameBox" th:if = "${startGame} == true">
-    <div class="randomNumber">
-        <h3>?</h3>
-        <h4>Skriv din gissning nedan</h4>
+<div class="center" id="game-box" th:if="${startGame} == true">
+
+    <br><br><br>
+    <div class="random-number">
+        <label for="guess-input">Write your guess below</label>
         <form th:action="@{/makeGuess}" method="post">
-            <textarea name="guess" required></textarea>
+            <input type="number" name="guess" id="guess-input" required>
             <br>
-            <p th:if="${resultat} == true">fel!</p>
-            <p th:if="${resultat} == false">rätt!</p>
+            <p th:if="${result} == 1">Higher!</p>
+            <p th:if="${result} == 2">Lower!</p>
+            <p th:if="${result} == 0">Correct!</p>
             <button type="submit" class="guess-button">Guess!</button>
         </form>
     </div>
