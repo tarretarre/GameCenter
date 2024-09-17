@@ -14,7 +14,7 @@
 </div>
 <h1>MinusGame</h1>
 <div class="gameboard-minus" th:if="${roundCounter} < ${endGame}">
-    <p class="question-minus" th:text="${question}"></p>
+    <p class="question-minus" th:text="'What is ' + ${question} +' = ?' "></p>
     <p class="description">Choose one alternative</p>
 
     <div th:if="${answer != null}">
@@ -34,9 +34,9 @@
 
 <div class="login-container">
     <th:block th:if="${roundCounter} == 5  ">
-        <div class="result-container">
+        <div class="result-container-minus">
             <p class="subtraction-result">You got 5/5 correct answer</p>
-            <a class="button" href="/minus">Play again</a>
+            <a class="play-again-button" href="/minus">Play again</a>
         </div>
     </th:block>
 </div>
