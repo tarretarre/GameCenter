@@ -6,6 +6,7 @@ body {
 }
 
 a {
+    color: #2d5159;
     text-decoration: none;
 }
 
@@ -17,7 +18,13 @@ h1 {
 
 h2 {
     font-family: Elephant, sans-serif;
-    color: #2d5159;
+    color: #FADFA1;
+    text-align: center;
+}
+
+h3 {
+    font-family: "Courier New", sans-serif;
+    color: #FADFA1;
     text-align: center;
 }
 
@@ -129,7 +136,7 @@ h2 {
 }
 
 .div-h2 {
-    background-color: #99c3cc;
+    background-color: #a54b4b;
     text-align: center;
     border-radius: 10px;
     width: fit-content;
@@ -148,6 +155,50 @@ h2 {
     text-align: center;
     background-color: #C96868;
     margin: auto;
+}
+
+
+
+.div-ooe-container {
+    background-color: #C96868;
+    text-align: center;
+    border-radius: 10px;
+    width: fit-content;
+    align-items: center;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 10px 0 10px;
+}
+
+.random-number-box {
+    min-width: 100px;
+    width: fit-content;
+    height: 100px;
+    background-color: #FADFA1;
+    font-size: 90px;
+    margin: auto;
+    border: 10px solid #2d5159;
+    padding: 10px;
+    color: #2d5159;
+}
+
+.choice-button,
+.play-button {
+    background-color: #FADFA1;
+    border: 0;
+    border-radius: 5px;
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    margin: 0 10px 0 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);
+    color: #2d5159;
+    font-family: "Courier New", sans-serif;
+}
+
+.choice-button:hover {
+    box-shadow: 0 0 0 0;
 }
 
 /*  Addition Game Styles    */
