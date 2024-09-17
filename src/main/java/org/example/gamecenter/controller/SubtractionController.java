@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Map;
 
 @Controller
-public class MinusController {
+public class SubtractionController {
 
     private final SubtractionGameService service;
 
-    public MinusController(SubtractionGameService service) {
+    public SubtractionController(SubtractionGameService service) {
         this.service = service;
     }
 
         @GetMapping("/minus")
         public String minus(Model model, HttpSession session) {
             Map<String, Object> questionAndAnswerData = service.gameLogic();
-            session.setAttribute("roundCounter", 1);
+            session.setAttribute("roundCounter", 0);
 
             if(questionAndAnswerData.isEmpty()){
                 return "minus";
@@ -43,7 +43,7 @@ public class MinusController {
             int endGame = (int)questionAndAnswerData.get("endGame");
 
             if(roundCounter == null){
-                roundCounter = 1;
+                roundCounter = 0;
             }
             else{
                 roundCounter++;

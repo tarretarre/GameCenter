@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 @AutoConfigureMockMvc
 @SpringBootTest
-public class MinusControllerTest {
+public class SubtractionControllerTest {
 
 
 
