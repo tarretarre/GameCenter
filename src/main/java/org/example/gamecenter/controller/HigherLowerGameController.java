@@ -45,8 +45,10 @@ public class HigherLowerGameController {
         if (guessInt != null) {
             int result = higherLowerService.controlGuess(guess, guessInt);
             redirectAttributes.addFlashAttribute("result", result);
+            System.out.println(guessInt);
         } else {
             redirectAttributes.addFlashAttribute("error", "Game has not been started or session expired.");
+            System.out.println(guessInt);
         }
         return "redirect:/higherlowergame";
     }

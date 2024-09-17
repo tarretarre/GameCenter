@@ -8,9 +8,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -27,6 +29,8 @@ class HigherLowerGameControllerTest {
 
     @Mock
     HigherLowerService higherLowerService;
+
+    MockHttpSession session = new MockHttpSession();
 
 
     @Test
@@ -50,14 +54,19 @@ class HigherLowerGameControllerTest {
 
     @Test
     public void testMakeGuessWithResultOne() throws Exception {
-        lenient().when(higherLowerService.controlGuess("42", 24)).thenReturn(2);
+        when(higherLowerService.randomNumberGenerator()).thenReturn(11);
+        int testRandomNumber = higherLowerService.randomNumberGenerator();
+        assert testRandomNumber == 11;
+
+        session.setAttribute("guessInt", testRandomNumber);
         mockMvc.perform(post("/makeGuess")
-                        .param("guess", "42"))
+                        .session(session)
+                        .param("guess", "5"))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/higherlowergame"))
                 .andExpect(flash().attribute("startGame", true))
-                .andExpect(flash().attribute("guess", "42"))
-                .andExpect(flash().attribute("result", 2));
+                .andExpect(flash().attribute("guess", "5"))
+                .andExpect(flash().attribute("result", 1));
     }
 }
