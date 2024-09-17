@@ -50,7 +50,7 @@ class HigherLowerGameControllerTest {
 
     @Test
     public void testMakeGuessWithResultOne() throws Exception {
-        lenient().when(higherLowerService.controllGuess("42", 24)).thenReturn(2);
+        lenient().when(higherLowerService.controlGuess("42", 24)).thenReturn(2);
         mockMvc.perform(post("/makeGuess")
                         .param("guess", "42"))
                 .andDo(print())

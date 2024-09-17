@@ -10,25 +10,25 @@
 <div class="center">
     <h2>Want to change game?:</h2>
 
-    <div class="gameArea" th:if="${startGame} == false">
+    <div class="game-area" th:if="${startGame} == false">
         <h3>Higher and Lower!</h3>
-        <p>A number is hiding under the questionmark, type what you think the number is.</p>
-        <p>You will then be told wether it's higher or lower</p>
+        <p>A number is hiding under the question mark, type what you think the number is.</p>
+        <p>You will then be told whether it's higher or lower</p>
         <br><br>
-        <a th:href="@{/startTheGame}" class="startGame">Start game</a>
+        <a th:href="@{/startTheGame}" class="start-game">Start game</a>
     </div>
-    <div class="center" id="gameBox" th:if="${startGame} == true">
+    <div class="center" id="game-box" th:if="${startGame} == true">
 
         <br><br><br>
-        <div class="randomNumber">
-            <label for="guessInput">Write your guess below</label>
+        <div class="random-number">
+            <label for="guess-input">Write your guess below</label>
             <form th:action="@{/makeGuess}" method="post">
-                <input type="number" name="guess" id="guessInput" required>
+                <input type="number" name="guess" id="guess-input" required>
                 <br>
                 <p th:if="${result} == 1">Higher!</p>
                 <p th:if="${result} == 2">Lower!</p>
                 <p th:if="${result} == 0">Correct!</p>
-                <button type="submit" class="guessButton">Guess!</button>
+                <button type="submit" class="guess-button">Guess!</button>
             </form>
         </div>
     </div>

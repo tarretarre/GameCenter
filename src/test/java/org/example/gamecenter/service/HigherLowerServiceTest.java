@@ -23,10 +23,10 @@ class HigherLowerServiceTest {
     }
 
     @Test
-    void controllGuess() {
-        int result1 = higherLowerService.controllGuess(guessRight, 23);
-        int result2 = higherLowerService.controllGuess(guessLow, 23);
-        int result3 = higherLowerService.controllGuess(guessHigh, 23);
+    void controlGuess() {
+        int result1 = higherLowerService.controlGuess(guessRight, 23);
+        int result2 = higherLowerService.controlGuess(guessLow, 23);
+        int result3 = higherLowerService.controlGuess(guessHigh, 23);
         assertEquals(0, result1, testErrorMessage + result1);
         assertEquals(1, result2, testErrorMessage + result2);
         assertEquals(2, result3, testErrorMessage + result3);

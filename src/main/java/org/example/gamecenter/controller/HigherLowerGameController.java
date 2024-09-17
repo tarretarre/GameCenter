@@ -22,6 +22,9 @@ public class HigherLowerGameController {
         if (!model.containsAttribute("startGame")) {
             model.addAttribute("startGame", false);
         }
+        if (!model.containsAttribute("result")) {
+            model.addAttribute("result", false);
+        }
         return "HigherLowerGame";
     }
 
@@ -40,7 +43,7 @@ public class HigherLowerGameController {
         Integer guessInt = (Integer) session.getAttribute("guessInt");
 
         if (guessInt != null) {
-            int result = higherLowerService.controllGuess(guess, guessInt);
+            int result = higherLowerService.controlGuess(guess, guessInt);
             redirectAttributes.addFlashAttribute("result", result);
         } else {
             redirectAttributes.addFlashAttribute("error", "Game has not been started or session expired.");
