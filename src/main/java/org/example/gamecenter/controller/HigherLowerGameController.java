@@ -23,7 +23,7 @@ public class HigherLowerGameController {
             model.addAttribute("startGame", false);
         }
         if (!model.containsAttribute("result")) {
-            model.addAttribute("result", false);
+            model.addAttribute("result", -1);
         }
         return "HigherLowerGame";
     }
