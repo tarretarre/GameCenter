@@ -1,5 +1,6 @@
 package org.example.gamecenter.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.gamecenter.service.SubtractionGameService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 @AutoConfigureMockMvc
@@ -39,7 +41,8 @@ public class SubtractionControllerTest {
         mockData.put("roundCounter", 0);
         mockData.put("endGame",5);
 
-        when(service.gameLogic(any())).thenReturn(mockData);
+
+        when(service.gameLogic((any(Integer.class)))).thenReturn(mockData);
         mockMvc.perform(MockMvcRequestBuilders.get("/minus"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
@@ -48,6 +51,7 @@ public class SubtractionControllerTest {
                 .andExpect(model().attribute("answer",new int[]{5,3,2}))
                 .andExpect(model().attribute("roundCounter",0))
                 .andExpect(model().attribute("endGame",5));
+        verify(service).gameLogic(any(Integer.class));
     }
 
 
@@ -55,10 +59,12 @@ public class SubtractionControllerTest {
     public void testPostToCheckUserAnswerRoundCounterAndMinusView() throws Exception {
         Map<String, Object> testMap = new HashMap<>();
         testMap.put("endGame",5);
-
-        when(service.gameLogic(any())).thenReturn(testMap);
-
         MockHttpSession session = new MockHttpSession();
+
+        when(service.gameLogic(any(Integer.class))).thenReturn(testMap);
+        when(service.checkAnswer(any(Integer.class),any(HttpSession.class)))
+                .thenReturn(testMap);
+
         mockMvc.perform(MockMvcRequestBuilders.post("/checkAnswer")
                         .param("selectedAnswer","10")
                         .session(session))
@@ -67,6 +73,8 @@ public class SubtractionControllerTest {
                 .andExpect(view().name("minus"))
                 .andExpect(model().attribute("roundCounter",1))
                 .andExpect(model().attributeExists("endGame"));
+        verify(service).gameLogic(any(Integer.class));
+        verify(service).checkAnswer(any(Integer.class),any(HttpSession.class));
 
     }
 

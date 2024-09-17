@@ -10,6 +10,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.*;
@@ -45,7 +46,7 @@ public class SubtractionGameServiceTest {
         testMap.put("roundCounter",1);
         testMap.put("endGame",5);
 
-        when(service.gameLogic(any())).thenReturn(testMap);
+        when(service.gameLogic(any(Integer.class))).thenReturn(testMap);
 
         assertEquals("20-10", testMap.get("question"));
         assertTrue(((List<?>)testMap.get("answer")).contains(10));
@@ -58,7 +59,7 @@ public class SubtractionGameServiceTest {
         Map<String,Object> testResult = new HashMap<>();
         testResult.put("roundCounter",6);
 
-        when(service.gameLogic(any())).thenReturn(testResult);
+        when(service.gameLogic(any(Integer.class))).thenReturn(testResult);
 
 
         assertNull(testResult.get("question"));
@@ -85,22 +86,5 @@ public class SubtractionGameServiceTest {
         assertEquals(3,testAnswer.size());
         assertTrue(testAnswer.contains(correctNumber));
     }
-
-    @Test
-    public void testIfCorrectAnswerIsNullThrowException(){
-        service.gameResult = new HashMap<>();
-
-        HttpSession session = Mockito.mock(HttpSession.class);
-        assertThrows(IllegalStateException.class, () -> {
-            service.checkAnswer(0,session);
-        });
-
-    }
-
-
-
-
-
-
 
 }

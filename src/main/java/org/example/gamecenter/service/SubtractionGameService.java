@@ -68,9 +68,6 @@ public class SubtractionGameService {
 
     public Map<String, Object> checkAnswer(int userAnswer, HttpSession session){
         Integer correctAnswer = (Integer) gameResult.get("correctAnswer");
-        if(correctAnswer == null){
-            throw new IllegalStateException("Correct answer not set in gameresult");
-        }
 
         Integer correctAnswerCounter = (Integer) session.getAttribute("correctAnswerCounter");
         if(correctAnswerCounter == null){
