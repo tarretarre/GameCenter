@@ -14,6 +14,9 @@ on:
   pull_request:
     branches: [ "master" ]
 
+  env:
+    build-number: ${GITHUB_RUN_NUMBER}
+
     permissions: write-all
 
 jobs:
@@ -31,13 +34,4 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-#
-#    - uses: "marvinpinto/action-automatic-releases@latest"
-#      with:
-#        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-#        automatic_release_tag: "latest"
-#        prerelease: false
-#        title: "Senaste"
-#        files: |
-#          target/*.jar
-#
+    - run: mv target/GameCenter-0.0.1-SNAPSHOT.jar target/gamecenterreleasedemomaven-1.${{env.build-number}}.1.jar
