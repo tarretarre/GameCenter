@@ -35,21 +35,11 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - run: mv target/GameCenter-0.0.1-SNAPSHOT.jar target/gamecenterreleasedemomaven-1.${{env.build-number}}.1.jar
-    - name: Create GitHub Release
-      id: create_release
-      uses: actions/create-release@v1
+    - uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        tag_name: v1.${{env.build-number}}.1
-        release_name: "Release v1.${{env.build-number}}.1"
-        draft: false
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
         prerelease: false
-        body: "Automatic release by GitHub Actions"
-        target_commitish: master
-
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: target/gamecenterreleasedemomaven-1.${{env.build-number}}.1.jar
-        asset_name: gamecenterreleasedemomaven-1.${{env.build-number}}.1.jar
-        asset_content_type: application/java-archive
+        title: "Senaste"
+        files: |
+          target/*.jar
