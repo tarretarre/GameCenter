@@ -157,8 +157,6 @@ h3 {
     margin: auto;
 }
 
-
-
 .div-ooe-container {
     background-color: #C96868;
     text-align: center;
@@ -270,4 +268,10 @@ h3 {
     font-weight: bold;
     text-align: center;
     border-radius: 10px;
+}
+.random-number{
+    text-align: center;
+}
+.game-area{
+    text-align: center;
 }
