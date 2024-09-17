@@ -1,6 +1,7 @@
 package org.example.gamecenter.controller;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.example.gamecenter.DTO.OddOrEvenDTO;
 import org.example.gamecenter.service.OddOrEvenService;
 import org.springframework.stereotype.Controller;
@@ -12,14 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/oddOrEven")
 public class OddOrEvenController {
 
     private final OddOrEvenService ooe;
-
-    public OddOrEvenController(OddOrEvenService ooe) {
-        this.ooe = ooe;
-    }
 
     @GetMapping("")
     public String oddOrEvenGame() {
