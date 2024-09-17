@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @AutoConfigureMockMvc
@@ -44,7 +45,7 @@ public class SubtractionGameServiceTest {
         testMap.put("roundCounter",1);
         testMap.put("endGame",5);
 
-        when(service.gameLogic()).thenReturn(testMap);
+        when(service.gameLogic(any())).thenReturn(testMap);
 
         assertEquals("20-10", testMap.get("question"));
         assertTrue(((List<?>)testMap.get("answer")).contains(10));
@@ -57,7 +58,7 @@ public class SubtractionGameServiceTest {
         Map<String,Object> testResult = new HashMap<>();
         testResult.put("roundCounter",6);
 
-        when(service.gameLogic()).thenReturn(testResult);
+        when(service.gameLogic(any())).thenReturn(testResult);
 
 
         assertNull(testResult.get("question"));

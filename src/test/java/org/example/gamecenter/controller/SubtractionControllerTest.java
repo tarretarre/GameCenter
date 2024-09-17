@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 @AutoConfigureMockMvc
@@ -38,7 +39,7 @@ public class SubtractionControllerTest {
         mockData.put("roundCounter", 0);
         mockData.put("endGame",5);
 
-        when(service.gameLogic()).thenReturn(mockData);
+        when(service.gameLogic(any())).thenReturn(mockData);
         mockMvc.perform(MockMvcRequestBuilders.get("/minus"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
@@ -55,7 +56,7 @@ public class SubtractionControllerTest {
         Map<String, Object> testMap = new HashMap<>();
         testMap.put("endGame",5);
 
-        when(service.gameLogic()).thenReturn(testMap);
+        when(service.gameLogic(any())).thenReturn(testMap);
 
         MockHttpSession session = new MockHttpSession();
         mockMvc.perform(MockMvcRequestBuilders.post("/checkAnswer")

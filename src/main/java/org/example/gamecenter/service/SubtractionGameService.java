@@ -7,6 +7,7 @@ import java.util.*;
 public class SubtractionGameService {
     public HashMap<String,Integer> questionAndAnswer = new HashMap<>();
     public Map<String, Object> gameResult = new HashMap<>();
+    List<String> questions;
 
     public SubtractionGameService() {
         questionAndAnswer.put("20-10",10);
@@ -17,12 +18,12 @@ public class SubtractionGameService {
         questionAndAnswer.put("20-20",0);
         questionAndAnswer.put("18-4",14);
         questionAndAnswer.put("25-10",15);
-
+        questions = new ArrayList<>(questionAndAnswer.keySet());
     }
 
-    public Map<String, Object> gameLogic(){
+    public Map<String, Object> gameLogic(int roundCounter){
         int endGame = 5;
-        int roundCounter = (int) gameResult.getOrDefault("roundCounter",1);
+
 
         if(roundCounter >= endGame){
             gameResult.put("endGame",endGame);
@@ -30,8 +31,9 @@ public class SubtractionGameService {
         }
 
             Random random = new Random();
-            Object[] questions = questionAndAnswer.keySet().toArray();
-            String question = (String)questions[random.nextInt(questions.length)];
+
+            String question = questions.get(roundCounter);
+        System.out.println("Roundcounter = " +roundCounter);
             List<Integer> answer = new ArrayList<>();
             int correctAnswer = questionAndAnswer.get(question);
 
@@ -83,6 +85,10 @@ public class SubtractionGameService {
         System.out.println("Updated gameresult: " + gameResult);
 
         return gameResult;
+    }
+
+    public void shuffleQuestions(){
+        Collections.shuffle(questions);
     }
 
 
