@@ -24,6 +24,7 @@ public class SubtractionController {
             Map<String, Object> questionAndAnswerData = service.gameLogic();
             session.setAttribute("roundCounter", 0);
 
+
             if(questionAndAnswerData.isEmpty()){
                 return "minus";
             }
@@ -34,33 +35,77 @@ public class SubtractionController {
             return "minus";
         }
 
+      /* @GetMapping("/resetGame")
+        public String resetGame(HttpSession session){
+           session.invalidate();
+            return "redirect:/minus";
+        }*/
+
 
 
         @PostMapping("/checkAnswer")
         public String checkAnswer(@RequestParam ("selectedAnswer") String selectedAnswer, HttpSession session, Model model) {
-            Map<String, Object> questionAndAnswerData = service .gameLogic();
             Integer roundCounter = (Integer) session.getAttribute("roundCounter");
-            int endGame = (int)questionAndAnswerData.get("endGame");
+            Integer correctAnswerCounter = (Integer) session.getAttribute("correctAnswerCounter");
+
 
             if(roundCounter == null){
                 roundCounter = 0;
             }
-            else{
-                roundCounter++;
+            roundCounter++;
+
+
+            if(correctAnswerCounter == null){
+                correctAnswerCounter = 0;
+                session.setAttribute("correctAnswerCounter", correctAnswerCounter);
             }
-            session.setAttribute("roundCounter", roundCounter);
 
 
-
-            if (roundCounter > endGame){
+            int userAnswer;
+            try{
+                userAnswer = Integer.parseInt(selectedAnswer);
+            }
+            catch (NumberFormatException e){
+                e.printStackTrace();
                 return "redirect:/minus";
             }
 
 
+            Map<String, Object> checkAnswerMap = service .checkAnswer(userAnswer,session);
+
+            correctAnswerCounter = (Integer) session.getAttribute("correctAnswerCounter");
+            session.setAttribute("roundCounter", roundCounter);
+            int endGame = (int)checkAnswerMap.get("endGame");
+
+
+
+
+
+
+
+
+
+
+            System.out.println("Session attributes: roundCounter = " + roundCounter + " CorrectanswerCounter = "+ correctAnswerCounter);
+
+
+
+            if (roundCounter > endGame){
+                session.setAttribute("correctAnswerCounter",0);
+                session.setAttribute("roundCounter",0);
+                return "redirect:/minus";
+            }
+
+            session.setAttribute("roundCounter",roundCounter);
+            session.setAttribute("correctAnswerCounter", correctAnswerCounter);
+
+
+            Map<String, Object> questionAndAnswerData = service.gameLogic();
             model.addAttribute("endGame",endGame);
             model.addAttribute("question", questionAndAnswerData.get("question"));
             model.addAttribute("answer", questionAndAnswerData.get("answer"));
             model.addAttribute("roundCounter",roundCounter);
+            model.addAttribute("correctAnswerCounter", correctAnswerCounter);
             return "minus";
         }
 

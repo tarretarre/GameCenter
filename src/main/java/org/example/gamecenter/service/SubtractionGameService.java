@@ -1,4 +1,5 @@
 package org.example.gamecenter.service;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
@@ -24,6 +25,7 @@ public class SubtractionGameService {
         int roundCounter = (int) gameResult.getOrDefault("roundCounter",1);
 
         if(roundCounter >= endGame){
+            gameResult.put("endGame",endGame);
             return gameResult;
         }
 
@@ -51,6 +53,8 @@ public class SubtractionGameService {
             gameResult.put("answer",answer);
             gameResult.put("roundCounter",roundCounter);
             gameResult.put("endGame",endGame);
+            gameResult.put("correctAnswer", correctAnswer);
+        System.out.println("Gamelogic: "+gameResult);
 
 
 
@@ -59,6 +63,29 @@ public class SubtractionGameService {
         return gameResult;
 
     }
+
+    public Map<String, Object> checkAnswer(int userAnswer, HttpSession session){
+        Integer correctAnswer = (Integer) gameResult.get("correctAnswer");
+        if(correctAnswer == null){
+            throw new IllegalStateException("Correct answer not set in gameresult");
+        }
+
+        Integer correctAnswerCounter = (Integer) session.getAttribute("correctAnswerCounter");
+        if(correctAnswerCounter == null){
+            correctAnswerCounter = 0;
+        }
+        if(userAnswer == correctAnswer){
+            correctAnswerCounter++;
+            session.setAttribute("correctAnswerCounter",correctAnswerCounter);
+        }
+
+
+        System.out.println("Updated gameresult: " + gameResult);
+
+        return gameResult;
+    }
+
+
 
 
 }
