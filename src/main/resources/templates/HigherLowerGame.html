@@ -6,20 +6,18 @@
     <title>Index</title>
 </head>
 <body>
-<h1>Welcome to the GameCenter!</h1>
-<div class="center">
-    <h2>Want to change game?:</h2>
-    <a th:href="@{/}" class="button">Udda eller Jämnt</a>
-    <a th:href="@{/higherlowergame}" class="button">Higher and Lower</a>
-    <a th:href="@{/}" class="button">Plustränaren</a>
-    <a th:href="@{/}" class="button">Minustränaren</a>
+<div class="div-h1">
+    <a th:href="@{/}"><h1>GameCenter</h1></a>
+</div>
+<div class="div-h2">
+    <h2>Game: <br>Higher and Lower</h2>
 </div>
 <div class="center" th:if = "${startGame} == false">
     <h3>Higher and Lower!</h3>
     <p>A number is hiding under the questionmark, type what you think the number is.</p>
     <p>You will then be told wether it's higher or lower</p>
     <br><br>
-    <a th:href="@{/startTheGame}" class="startGame">Start game</a>
+    <a th:href="@{/startTheGame}" class="start-game">Start game</a>
 </div>
 <div class="center"  id="gameBox" th:if = "${startGame} == true">
     <div class="randomNumber">
@@ -30,7 +28,7 @@
             <br>
             <p th:if="${resultat} == true">fel!</p>
             <p th:if="${resultat} == false">rätt!</p>
-            <button type="submit" class="guessButton">Guess!</button>
+            <button type="submit" class="guess-button">Guess!</button>
         </form>
     </div>
 </div>

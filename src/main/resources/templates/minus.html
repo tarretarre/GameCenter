@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+<div class="div-h1">
+    <a th:href="@{/}"><h1>GameCenter</h1></a>
+</div>
+<div class="div-h2">
+    <h2>Game: <br>Subtraction game</h2>
+</div>
 <h1>MinusGame</h1>
 <div class="gameboard-minus" th:if="${roundCounter} < ${endGame}">
     <p class="question-minus" th:text="${question}"></p>
@@ -31,8 +37,6 @@
         <div class="result-container">
             <p class="subtraction-result">You got 5/5 correct answer</p>
             <a class="button" href="/minus">Play again</a>
-            <a class="button" href="/">GameCenter</a>
-
         </div>
     </th:block>
 </div>

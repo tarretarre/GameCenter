@@ -31,10 +31,16 @@ h2 {
     display: inline-block;
     font-size: 20px;
     border-radius: 5px;
+    font-family: "Courier New", sans-serif;
+    margin: 20px;
+    width: 300px;
+    height: 300px;
+    cursor: pointer;
+    box-shadow: 0 6px 12px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 
-.gameboard-minus{
+.gameboard-minus {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -47,7 +53,7 @@ h2 {
     align-items: center;
 }
 
-.question-minus{
+.question-minus {
     display: block;
     border: 2px solid white;
     color: white;
@@ -59,12 +65,12 @@ h2 {
     width: fit-content;
 }
 
-.description{
+.description {
     font-size: 50px;
     color: black;
 }
 
-.answer-container{
+.answer-container {
     display: flex;
     justify-content: center;
     gap: 10px;
@@ -91,7 +97,7 @@ h2 {
     color: black;
 }
 
-.startGame{
+.start-game {
     background-color: #04AA6D;
     border: none;
     color: white;
@@ -102,7 +108,7 @@ h2 {
     font-size: 16px;
     border-radius: 5px;
 }
-.guessButton {
+.guess-button {
     background-color: #04AA6D;
     border: none;
     color: white;
@@ -141,12 +147,13 @@ h2 {
     background-color: #99c3cc;
     text-align: center;
     border-radius: 10px;
-    max-width: 200px;
+    width: fit-content;
     max-height: 100px;
     align-items: center;
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
+    padding: 0 10px 0 10px;
 }
 
 #container {
