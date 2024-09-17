@@ -6,31 +6,32 @@
     <title>Index</title>
 </head>
 <body>
-<h1>Welcome to the GameCenter!</h1>
-<div class="center">
-    <h2>Want to change game?:</h2>
+<div class="div-h1">
+    <a th:href="@{/}"><h1>GameCenter</h1></a>
+</div>
+<div class="div-h2">
+    <h2>Game: <br>Higher and Lower</h2>
+</div>
+<div class="center" th:if = "${startGame} == false">
+    <h3>Higher and Lower!</h3>
+    <p>A number is hiding under the question mark, type what you think the number is.</p>
+    <p>You will then be told whether it's higher or lower</p>
+    <br><br>
+    <a th:href="@{/startTheGame}" class="start-game">Start game</a>
+</div>
+<div class="center" id="game-box" th:if="${startGame} == true">
 
-    <div class="game-area" th:if="${startGame} == false">
-        <h3>Higher and Lower!</h3>
-        <p>A number is hiding under the question mark, type what you think the number is.</p>
-        <p>You will then be told whether it's higher or lower</p>
-        <br><br>
-        <a th:href="@{/startTheGame}" class="start-game">Start game</a>
-    </div>
-    <div class="center" id="game-box" th:if="${startGame} == true">
-
-        <br><br><br>
-        <div class="random-number">
-            <label for="guess-input">Write your guess below</label>
-            <form th:action="@{/makeGuess}" method="post">
-                <input type="number" name="guess" id="guess-input" required>
-                <br>
-                <p th:if="${result} == 1">Higher!</p>
-                <p th:if="${result} == 2">Lower!</p>
-                <p th:if="${result} == 0">Correct!</p>
-                <button type="submit" class="guess-button">Guess!</button>
-            </form>
-        </div>
+    <br><br><br>
+    <div class="random-number">
+        <label for="guess-input">Write your guess below</label>
+        <form th:action="@{/makeGuess}" method="post">
+            <input type="number" name="guess" id="guess-input" required>
+            <br>
+            <p th:if="${result} == 1">Higher!</p>
+            <p th:if="${result} == 2">Lower!</p>
+            <p th:if="${result} == 0">Correct!</p>
+            <button type="submit" class="guess-button">Guess!</button>
+        </form>
     </div>
 </div>
 </body>
