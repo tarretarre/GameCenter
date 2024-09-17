@@ -12,5 +12,53 @@
 <div class="div-h2">
     <h2>Game: <br>Addition game</h2>
 </div>
+
+<div class="window">
+    <div class="game-container">
+        <th:block th:if="${gameDto.totalRounds} == 0">
+            <form class="game-container" action="/addition" method="post">
+                <label for="rounds" class="choice-title">How many rounds do you want to play?</label>
+                <input type="number" class="addition-number-input" id="rounds" name="totalRounds" min="1" max="25" value="1"/>
+                <button type="submit" class="button next-button">Start game</button>
+            </form>
+        </th:block>
+
+        <th:block th:unless="${gameOver}" th:if="${gameDto.totalRounds} != 0">
+            <p class="question"
+               th:text="'What is ' + ${gameDto.questions[gameDto.currentRound]}"></p>
+            <p class="choice-title">Choose one of the following options</p>
+
+            <div class="answer-container">
+                <div th:each="answer : ${gameDto.answerChoices[gameDto.currentRound]}">
+                    <form action="/addition/answer-check" method="post">
+                        <input type="hidden" name="userAnswer" class="hiddenInput" th:value="${answer}"/>
+                        <button
+                                class="answer"
+                                th:type="${answerCheck} ? 'button' : 'submit'"
+                                th:classappend="${answerCheck} ? (${answer == gameDto.answers[gameDto.currentRound]} ? 'btn-success' : 'btn-fail') : ''"
+                                th:text="${answer}">
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <br>
+            <th:block th:if="${answerCheck}">
+                <form th:action="${lastRound}? '/addition/game-over': '/addition'" method="post">
+                    <button type="submit" class="button next-button"
+                            th:text="${lastRound} ? 'Finish game' : 'Next Question'"></button>
+                </form>
+            </th:block>
+        </th:block>
+
+        <th:block th:if="${gameOver}">
+            <p class="question">Game Result:</p>
+            <p class="choice-title">You scored: <span th:text="${gameDto.correctAnswers}"></span> out of <span
+                    th:text="${gameDto.totalRounds}"></span></p>
+            <form action="/addition/reset" method="post">
+                <button type="submit" class="button next-button">Play again</button>
+            </form>
+        </th:block>
+    </div>
+</div>
 </body>
 </html>
