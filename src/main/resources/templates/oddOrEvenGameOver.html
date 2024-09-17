@@ -14,9 +14,10 @@
 </div>
 <div class="div-ooe-container">
     <div class="game-over-box">
-        <h2>Welcome to Odd or Even-game!</h2>
+        <h2>Game Over!</h2>
     </div>
-    <button type="submit" class="play-button" name="play"><a th:href="@{/oddOrEven/Start}">Press to play</a></button>
+        <h3>You got <strong th:text="${correctChoices}"></strong> right out of <strong>5</strong>!</h3>
+    <button type="submit" class="play-button" name="play"><a th:href="@{/oddOrEven}">Play again</a></button>
 </div>
 </body>
 </html>

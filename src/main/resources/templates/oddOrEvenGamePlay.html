@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles.css">
+    <title>Odd or Even</title>
+</head>
+<body>
+<div class="div-h1">
+    <a th:href="@{/}"><h1>GameCenter</h1></a>
+</div>
+<div class="div-h2">
+    <h2>Game: <br>Odd or Even</h2>
+</div>
+<div class="div-ooe-container">
+    <div class="random-number-box">
+        <strong th:text="${randomNumber}"></strong>
+    </div><br>
+    <form action="/oddOrEven/Gameplay" method="post">
+        <label><h3>Is the number odd or even?</h3></label><br>
+        <button type="submit" class="choice-button" name="choice" value="odd">Odd</button>
+        <button type="submit" class="choice-button" name="choice" value="even">Even</button>
+    </form>
+</div>
+</body>
+</html>

@@ -11,7 +11,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 @Controller
 public class HigherLowerGameController {
-
     @GetMapping("/higherlowergame")
     public String higherLowerGame(Model model) {
         if (!model.containsAttribute("startGame")) {
