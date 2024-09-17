@@ -35,7 +35,7 @@ public class SubtractionControllerTest {
         Map<String, Object> mockData = new HashMap<>();
         mockData.put("question", "10-5");
         mockData.put("answer", new int[]{5,3,2});
-        mockData.put("roundCounter", 1);
+        mockData.put("roundCounter", 0);
         mockData.put("endGame",5);
 
         when(service.gameLogic()).thenReturn(mockData);
@@ -45,7 +45,7 @@ public class SubtractionControllerTest {
                 .andExpect(view().name("minus"))
                 .andExpect(model().attribute("question","10-5"))
                 .andExpect(model().attribute("answer",new int[]{5,3,2}))
-                .andExpect(model().attribute("roundCounter",1))
+                .andExpect(model().attribute("roundCounter",0))
                 .andExpect(model().attribute("endGame",5));
     }
 

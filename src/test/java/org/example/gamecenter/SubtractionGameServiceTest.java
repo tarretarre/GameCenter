@@ -1,9 +1,11 @@
 package org.example.gamecenter;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.gamecenter.service.SubtractionGameService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -24,6 +26,8 @@ public class SubtractionGameServiceTest {
 
     @Mock
     private SubtractionGameService service;
+
+
 
     @BeforeEach
     public void setUp(){
@@ -79,6 +83,17 @@ public class SubtractionGameServiceTest {
         }
         assertEquals(3,testAnswer.size());
         assertTrue(testAnswer.contains(correctNumber));
+    }
+
+    @Test
+    public void testIfCorrectAnswerIsNullThrowException(){
+        service.gameResult = new HashMap<>();
+
+        HttpSession session = Mockito.mock(HttpSession.class);
+        assertThrows(IllegalStateException.class, () -> {
+            service.checkAnswer(0,session);
+        });
+
     }
 
 

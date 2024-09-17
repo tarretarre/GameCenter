@@ -25,7 +25,7 @@
     <button class="answer-minus" type="submit"  name="selectedAnswer" th:value="${answer[0]}" th:text="${answer[0]}"></button>
     <button class="answer-minus" type="submit"  name="selectedAnswer" th:value="${answer[1]}" th:text="${answer[1]}"></button>
     <button class="answer-minus" type="submit"  name="selectedAnswer" th:value="${answer[2]}" th:text="${answer[2]}"></button>
-            <p class="question-minus" th:text="${roundCounter} +'/'+${endGame}"></p>
+            <p class="question-minus" th:text="${roundCounter +1} +'/'+${endGame}"></p>
 
         </form>
     </div>
