@@ -14,10 +14,10 @@ on:
   pull_request:
     branches: [ "master" ]
 
-  env:
-    build-number: ${GITHUB_RUN_NUMBER}
+env:
+  build-number: ${GITHUB_RUN_NUMBER}
 
-  permissions: write-all
+permissions: write-all
 
 jobs:
   build:
