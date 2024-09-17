@@ -213,3 +213,80 @@ h3 {
 .choice-button:hover {
     box-shadow: 0 0 0 0;
 }
+
+/*  Addition Game Styles    */
+
+.window {
+    min-height: 60vh;
+    min-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.game-container {
+    min-height: 60vh;
+    min-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+}
+
+.question {
+    font-size: 50px;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    width: fit-content;
+}
+
+.choice-title {
+    font-size: 30px;
+    color: #2d5159;
+}
+
+.answer {
+    color: white;
+    background-color: #99c3cc;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 5px;
+    margin: 10px;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+}
+
+.btn-success {
+    border: 2px solid #41ff00;
+    background-color: rgba(65, 255, 0, 0.5);
+}
+
+.btn-fail {
+    border: 2px solid #ff0000;
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.next-button {
+    width: 200px;
+    height: 50px;
+}
+
+.addition-number-input {
+    background-color: #f6acac;
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 10px;
+}
+.random-number{
+    text-align: center;
+}
+.game-area{
+    text-align: center;
+}
