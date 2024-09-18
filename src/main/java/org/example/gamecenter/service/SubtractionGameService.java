@@ -5,9 +5,9 @@ import java.util.*;
 
 @Service
 public class SubtractionGameService {
-    public HashMap<String,Integer> questionAndAnswer = new HashMap<>();
+    public final HashMap<String,Integer> questionAndAnswer = new HashMap<>();
     public Map<String, Object> gameResult = new HashMap<>();
-    List<String> questions;
+    public final List<String> questions;
 
     public SubtractionGameService() {
         questionAndAnswer.put("20-10",10);
@@ -24,51 +24,34 @@ public class SubtractionGameService {
     public Map<String, Object> gameLogic(int roundCounter){
         int endGame = 5;
 
-
         if(roundCounter >= endGame){
             gameResult.put("endGame",endGame);
             return gameResult;
         }
-
             Random random = new Random();
-
             String question = questions.get(roundCounter);
-        System.out.println("Roundcounter = " +roundCounter);
             List<Integer> answer = new ArrayList<>();
             int correctAnswer = questionAndAnswer.get(question);
-
             answer.add(correctAnswer);
 
             while(answer.size() < 3){
                 int inCorrectAnswer = random.nextInt(100)+1;
                 if(inCorrectAnswer!= correctAnswer && !answer.contains(inCorrectAnswer)){
                     answer.add(inCorrectAnswer);
-
                 }
-
             }
 
-
             Collections.shuffle(answer);
-
             gameResult.put("question",question);
             gameResult.put("answer",answer);
             gameResult.put("roundCounter",roundCounter);
             gameResult.put("endGame",endGame);
             gameResult.put("correctAnswer", correctAnswer);
-        System.out.println("Gamelogic: "+gameResult);
-
-
-
-
-
         return gameResult;
-
     }
 
     public Map<String, Object> checkAnswer(int userAnswer, HttpSession session){
         Integer correctAnswer = (Integer) gameResult.get("correctAnswer");
-
         Integer correctAnswerCounter = (Integer) session.getAttribute("correctAnswerCounter");
         if(correctAnswerCounter == null){
             correctAnswerCounter = 0;
@@ -77,19 +60,10 @@ public class SubtractionGameService {
             correctAnswerCounter++;
             session.setAttribute("correctAnswerCounter",correctAnswerCounter);
         }
-
-
-        System.out.println("Updated gameresult: " + gameResult);
-
         return gameResult;
     }
 
     public void shuffleQuestions(){
         Collections.shuffle(questions);
     }
-
-
-
-
-
 }

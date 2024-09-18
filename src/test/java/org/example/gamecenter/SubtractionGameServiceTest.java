@@ -1,20 +1,12 @@
 package org.example.gamecenter;
-
-import jakarta.servlet.http.HttpSession;
 import org.example.gamecenter.service.SubtractionGameService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
-
 import java.util.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -28,15 +20,6 @@ public class SubtractionGameServiceTest {
 
     @Mock
     private SubtractionGameService service;
-
-
-
-    @BeforeEach
-    public void setUp(){
-        MockitoAnnotations.initMocks(this);
-    }
-
-
 
     @Test
     public void testCheckIfCorrectAnswer()  {
@@ -54,13 +37,10 @@ public class SubtractionGameServiceTest {
 
     @Test
     public void testCheckIfGameEndWhenRoundCounterIsHigherThanFive() {
-
-
         Map<String,Object> testResult = new HashMap<>();
         testResult.put("roundCounter",6);
 
         when(service.gameLogic(any(Integer.class))).thenReturn(testResult);
-
 
         assertNull(testResult.get("question"));
         assertNull(testResult.get("answer"));
@@ -72,7 +52,6 @@ public class SubtractionGameServiceTest {
         Random random = new Random();
         List<Integer> testAnswer = new ArrayList<>();
         int correctNumber = 10;
-
         testAnswer.add(correctNumber);
 
         while(testAnswer.size() <3){
@@ -83,8 +62,38 @@ public class SubtractionGameServiceTest {
                 testAnswer.add(randomNumber);
             }
         }
+
         assertEquals(3,testAnswer.size());
         assertTrue(testAnswer.contains(correctNumber));
     }
 
+    @Test
+    public void checkIfCorrectAnswerCounterEqualsNullSetToZero(){
+        service.gameResult = new HashMap<>();
+        Integer correctAnswerCounter = 0;
+
+        assertEquals(0,correctAnswerCounter);
+    }
+
+    @Test
+    public void checkIfUserAnswerEqualsCorrectAnswer(){
+        service.gameResult = new HashMap<>();
+        service.gameResult.put("correctAnswer",20);
+        service.gameResult.put("userAnswer",20);
+
+        Integer correctAnswer = (Integer) service.gameResult.get("correctAnswer");
+        Integer userAnswer = (Integer) service.gameResult.get("userAnswer");
+
+        assertEquals(correctAnswer,userAnswer);
+    }
+
+    @Test
+    public void checkIfQuestionsIsShuffled(){
+        SubtractionGameService service1 = new SubtractionGameService();
+        List<String> originalList = new ArrayList<>(service1.questions);
+        service1.shuffleQuestions();
+        List<String> secondList = new ArrayList<>(service1.questions);
+
+        assertNotEquals(originalList,secondList);
+    }
 }

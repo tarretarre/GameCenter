@@ -47,7 +47,7 @@ h3 {
 }
 
 
-.gameboard-minus {
+.game-board-minus {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -304,8 +304,5 @@ h3 {
     border-radius: 10px;
 }
 .random-number{
-    text-align: center;
-}
-.game-area{
     text-align: center;
 }

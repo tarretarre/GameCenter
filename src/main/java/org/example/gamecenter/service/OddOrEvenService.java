@@ -1,7 +1,7 @@
 package org.example.gamecenter.service;
 
 import lombok.Data;
-import org.example.gamecenter.DTO.OddOrEvenDTO;
+import org.example.gamecenter.dto.OddOrEvenDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;

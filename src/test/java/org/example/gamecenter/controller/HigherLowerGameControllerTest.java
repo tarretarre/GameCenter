@@ -10,8 +10,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -30,7 +28,7 @@ class HigherLowerGameControllerTest {
     @Mock
     HigherLowerService higherLowerService;
 
-    MockHttpSession session = new MockHttpSession();
+    private final MockHttpSession session = new MockHttpSession();
 
 
     @Test

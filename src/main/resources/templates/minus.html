@@ -12,21 +12,18 @@
 <div class="div-h2">
     <h2>Game: <br>Subtraction game</h2>
 </div>
-<h1>MinusGame</h1>
-<div class="gameboard-minus" th:if="${roundCounter} < ${endGame}">
+<div class="game-board-minus" th:if="${roundCounter} < ${endGame}">
     <p class="question-minus" th:text="'What is ' + ${question} +' = ?' "></p>
     <p class="description">Choose one alternative</p>
 
     <div th:if="${answer != null}">
-
 
     <div class="answer-container">
         <form method="POST" action="checkAnswer">
     <button class="answer-minus" type="submit"  name="selectedAnswer" th:value="${answer[0]}" th:text="${answer[0]}"></button>
     <button class="answer-minus" type="submit"  name="selectedAnswer" th:value="${answer[1]}" th:text="${answer[1]}"></button>
     <button class="answer-minus" type="submit"  name="selectedAnswer" th:value="${answer[2]}" th:text="${answer[2]}"></button>
-            <p class="question-minus" th:text="${roundCounter +1} +'/'+${endGame}"></p>
-
+            <p class="question-minus" th:text="'Round '+${roundCounter +1} +'/'+${endGame}"></p>
         </form>
     </div>
 </div>

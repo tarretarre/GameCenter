@@ -1,25 +1,23 @@
 package org.example.gamecenter.controller;
-
 import jakarta.servlet.http.HttpSession;
 import org.example.gamecenter.service.SubtractionGameService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Collections;
 import java.util.Map;
 
 @Controller
 public class SubtractionController {
-
     private final SubtractionGameService service;
+    private final Logger logger = LoggerFactory.getLogger(SubtractionController.class);
 
     public SubtractionController(SubtractionGameService service) {
         this.service = service;
     }
-
         @GetMapping("/minus")
         public String minus(Model model, HttpSession session) {
 
@@ -29,7 +27,6 @@ public class SubtractionController {
             session.setAttribute("roundCounter", 0);
             int roundCounter = (int) session.getAttribute("roundCounter");
             Map<String, Object> questionAndAnswerData = service.gameLogic(roundCounter);
-
 
             if(questionAndAnswerData.isEmpty()){
                 return "minus";
@@ -41,37 +38,29 @@ public class SubtractionController {
             return "minus";
         }
 
-
-
-
-
         @PostMapping("/checkAnswer")
         public String checkAnswer(@RequestParam ("selectedAnswer") String selectedAnswer, HttpSession session, Model model) {
             Integer roundCounter = (Integer) session.getAttribute("roundCounter");
             Integer correctAnswerCounter = (Integer) session.getAttribute("correctAnswerCounter");
-
 
             if(roundCounter == null){
                 roundCounter = 0;
             }
             roundCounter++;
 
-
             if(correctAnswerCounter == null){
                 correctAnswerCounter = 0;
                 session.setAttribute("correctAnswerCounter", correctAnswerCounter);
             }
-
 
             int userAnswer;
             try{
                 userAnswer = Integer.parseInt(selectedAnswer);
             }
             catch (NumberFormatException e){
-                e.printStackTrace();
+                logger.error(e.getMessage());
                 return "redirect:/minus";
             }
-
 
             Map<String, Object> checkAnswerMap = service .checkAnswer(userAnswer,session);
 
@@ -79,12 +68,9 @@ public class SubtractionController {
             session.setAttribute("roundCounter", roundCounter);
             int endGame = (int)checkAnswerMap.get("endGame");
 
-
             if (roundCounter >= endGame){
-                System.out.println("Nollställer correctanswarCounter");
                 session.removeAttribute("correctAnswerCounter");
             }
-
 
             Map<String, Object> questionAndAnswerData = service.gameLogic(roundCounter);
             model.addAttribute("endGame",endGame);
