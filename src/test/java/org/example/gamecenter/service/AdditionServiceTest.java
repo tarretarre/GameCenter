@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AdditionServiceTest {
 
-    AdditionService additionService = new AdditionService();
+    private final AdditionService additionService = new AdditionService();
 
     @Test
     void emptyDtoStartGameShouldGenerateQuestionAndAnswersAndSetGameToStarted() {

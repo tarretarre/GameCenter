@@ -47,23 +47,48 @@ h3 {
 }
 
 
-.gameboard-minus {
+.game-board-minus {
     display: flex;
     align-items: center;
     flex-direction: column;
     gap: 20px;
 }
 
+.result-container-minus{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
 .question-minus {
     display: block;
     border: 2px solid white;
     color: white;
-    background-color: #04AA6D;
-    font-size: 50px;
+    background-color: #038956;
+    font-size: 35px;
     padding: 20px;
     margin: 10px;
     text-align: center;
-    width: fit-content;
+    width: 400px;
+}
+
+.play-again-button{
+    background-color: #038956;
+    border: none;
+    color: #2d5159;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 50px;
+    border-radius: 5px;
+    font-family: "Courier New", sans-serif;
+    margin: 20px;
+    width: 300px;
+    height: 100px;
+    cursor: pointer;
+    box-shadow: 0 6px 12px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 .description {
@@ -85,8 +110,17 @@ h3 {
     padding: 20px;
     margin: 10px;
     text-align: center;
-    width: 50px;
-    height: 50px;
+    width: 130px;
+    height: 100px;
+    cursor: pointer;
+}
+
+.subtraction-result{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 100px;
+    color: black;
 }
 
 .button:hover {
@@ -243,9 +277,7 @@ h3 {
 .random-number{
     text-align: center;
 }
-.game-area{
-    text-align: center;
-}
+
 .center{
     text-align: center;
 }

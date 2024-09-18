@@ -1,4 +1,4 @@
-package org.example.gamecenter.DTO;
+package org.example.gamecenter.dto;
 
 import lombok.Data;
 

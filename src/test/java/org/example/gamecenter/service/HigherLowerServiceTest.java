@@ -5,13 +5,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HigherLowerServiceTest {
 
-    HigherLowerService higherLowerService = new HigherLowerService();
+    private final HigherLowerService higherLowerService = new HigherLowerService();
 
-    String guessRight = "23";
-    String guessLow = "21";
-    String guessHigh = "25";
-    String testErrorMessage = "Generated number is out of bounds: ";
-
+    final String guessRight = "23";
+    final String guessLow = "21";
+    final String guessHigh = "25";
+    final String testErrorMessage = "Generated number is out of bounds: ";
 
     @Test
     void randomNumberGenerator() {

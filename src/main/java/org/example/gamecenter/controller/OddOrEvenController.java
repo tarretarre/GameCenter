@@ -2,7 +2,7 @@ package org.example.gamecenter.controller;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.example.gamecenter.DTO.OddOrEvenDTO;
+import org.example.gamecenter.dto.OddOrEvenDTO;
 import org.example.gamecenter.service.OddOrEvenService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

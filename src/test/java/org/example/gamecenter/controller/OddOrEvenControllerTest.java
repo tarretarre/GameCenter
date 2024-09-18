@@ -1,6 +1,6 @@
 package org.example.gamecenter.controller;
 
-import org.example.gamecenter.DTO.OddOrEvenDTO;
+import org.example.gamecenter.dto.OddOrEvenDTO;
 import org.example.gamecenter.service.OddOrEvenService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

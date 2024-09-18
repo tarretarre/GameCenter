@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Minustranaren</title>
+    <title>MinusGame</title>
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
@@ -12,22 +12,28 @@
 <div class="div-h2">
     <h2>Game: <br>Subtraction game</h2>
 </div>
-<div class="gameboard-minus">
-    <p class="question-minus">Vad blir 20-10 ?</p>
-    <p class="description">Välj ett av följande alternativ</p>
+<div class="game-board-minus" th:if="${roundCounter} < ${endGame}">
+    <p class="question-minus" th:text="'What is ' + ${question} +' = ?' "></p>
+    <p class="description">Choose one alternative</p>
+
+    <div th:if="${answer != null}">
 
     <div class="answer-container">
-    <p class="answer-minus">30</p>
-    <p class="answer-minus">5</p>
-    <p class="answer-minus">10</p>
+        <form method="POST" action="checkAnswer">
+    <button class="answer-minus" type="submit"  name="selectedAnswer" th:value="${answer[0]}" th:text="${answer[0]}"></button>
+    <button class="answer-minus" type="submit"  name="selectedAnswer" th:value="${answer[1]}" th:text="${answer[1]}"></button>
+    <button class="answer-minus" type="submit"  name="selectedAnswer" th:value="${answer[2]}" th:text="${answer[2]}"></button>
+            <p class="question-minus" th:text="'Round '+${roundCounter +1} +'/'+${endGame}"></p>
+        </form>
     </div>
-    <p class="question-minus">Du är på 1/5</p>
+</div>
 </div>
 
 <div class="login-container">
-    <th:block th:if="${counter} == 5">
-        <div class="result-container">
-            <p class="result">Du fick 5 rätt av 5</p>
+    <th:block th:if="${roundCounter} == 5  ">
+        <div class="result-container-minus">
+            <p class="subtraction-result" th:text="${correctAnswerCounter} +'/5'"></p>
+            <a class="play-again-button" href="/minus">Play again</a>
         </div>
     </th:block>
 </div>
