@@ -13,11 +13,9 @@
     <h2>Game: <br>Higher and Lower</h2>
 </div>
 <div class="center" th:if = "${startGame} == false">
-    <h3>Higher and Lower!</h3>
-    <p>A number is hiding under the question mark, type what you think the number is.</p>
-    <p>You will then be told whether it's higher or lower</p>
-    <br><br>
-    <a th:href="@{/startTheGame}" class="start-game">Start game</a>
+    <h2>Welcome to Higher and Lower!</h2>
+    <br>
+    <a th:href="@{/startTheGame}" class="play-button">Start game</a>
 </div>
 <div class="center" id="game-box" th:if="${startGame} == true">
 
@@ -30,6 +28,7 @@
             <p th:if="${result} == 1">Higher!</p>
             <p th:if="${result} == 2">Lower!</p>
             <p th:if="${result} == 0">Correct!</p>
+            <br>
             <button type="submit" class="guess-button">Guess!</button>
         </form>
     </div>
