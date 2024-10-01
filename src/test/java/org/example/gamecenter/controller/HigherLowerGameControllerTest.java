@@ -42,7 +42,7 @@ class HigherLowerGameControllerTest {
 
     @Test
     void testHigherLowerGameStartGame() throws Exception {
-        this.mockMvc.perform(get("/startTheGame"))
+        this.mockMvc.perform(get("/bartGame"))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/higherlowergame"))
